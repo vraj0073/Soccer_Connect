@@ -24,8 +24,6 @@ test:
           - $CI_PROJECT_DIR/target/failsafe-reports/TEST-*.xml
 heroku:
  stage: deploy
- only:
- - master
  script:
  - git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/<projectsoccerconnectteam15>.git
  - git push -f heroku master
