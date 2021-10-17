@@ -1,0 +1,24 @@
+stages:
+  - build
+  - test
+build:
+    stage: build
+    tags:
+     - ugrad
+    script:
+     - echo "Build stage"
+     - mvn compile
+test:
+    stage: test
+    tags:
+     - ugrad
+    script:
+     - echo "Test stage"
+     - mvn test
+    artifacts:
+      when: always
+      reports:
+        junit:
+          - $CI_PROJECT_DIR/target/surefire-reports/TEST-*.xml
+          - $CI_PROJECT_DIR/target/failsafe-reports/TEST-*.xml
+   
