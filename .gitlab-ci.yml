@@ -27,8 +27,8 @@ heroku:
  tags:
    - ugrad
  script:
- #- git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/projectsoccerconnectteam15.git
-   - git push -f heroku main
+   - git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/projectsoccerconnectteam15.git
+   - git push -f heroku master
  only:
    - pipeline
 
