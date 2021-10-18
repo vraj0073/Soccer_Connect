@@ -22,14 +22,16 @@ test:
         junit:
           - $CI_PROJECT_DIR/target/surefire-reports/TEST-*.xml
           - $CI_PROJECT_DIR/target/failsafe-reports/TEST-*.xml
-heroku:
- stage: deploy
- tags:
-   - ugrad
- script:
-  # - git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/projectsoccerconnectteam15.git
-   - git push -f heroku master
- only:
-   - pipeline
+deploy:
+  stage: deploy
+  tags:
+    - dalfcs_gitlab_docker_ci
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y -ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_NAME_TEST --api-keu=$HEROKU_API_KEY
+  
 
    
