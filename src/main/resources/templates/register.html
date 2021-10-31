@@ -10,6 +10,11 @@
 
 
 <form th:action="@{/registersubmission}" method="post">
+    <p> Register as:
+    <select name="role" id="role">
+        <option value="1">Player</option>
+        <option value="2">Team</option>
+    </select></p>
     <p>Email ID: <input type="email" th:name="email" /></p>
     <p>Name/Team Name: <input type="text" th:name="name" /></p>
     <p>Mobile no: <input type="text" th:name="mobile" /></p>

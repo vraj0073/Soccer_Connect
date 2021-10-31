@@ -1,4 +1,4 @@
-package com.soccerconnect;
+package com.soccerconnect.controllers;
 
 
 import org.springframework.stereotype.Controller;
