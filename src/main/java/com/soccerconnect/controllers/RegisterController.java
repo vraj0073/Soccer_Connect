@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class RegisterController {
 
+    DBConnectionApp db = new DBConnectionApp();
+
     @GetMapping(value = "/register")
     public String registerForm()
     {
@@ -22,16 +24,8 @@ public class RegisterController {
                                   @RequestParam(value = "mobile") String mobile,
                                   @RequestParam(value = "password") String password,
                                   @RequestParam(value = "repassword") String repassword,
-                                  @RequestParam(value = "category") String category,
-                                  DBConnectionApp db)
+                                  @RequestParam(value = "category") String category)
     {
-//        System.out.println("Role: "+ role);
-//        System.out.println("Email: "+ email);
-//        System.out.println("name: "+ name);
-//        System.out.println("mobile: "+ mobile);
-//        System.out.println("Password: "+ password);
-//        System.out.println("repassword: "+ repassword);
-//        System.out.println("category: "+ category);
         db.registrationQuery(role, email, name,
                 mobile, password, category);
         return "login";
