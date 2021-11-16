@@ -150,4 +150,17 @@ public class DBConnectionApp {
         return players;
     }
 
+    public void groundQuery(String stadiumName, String location, String manageName, String capacity) {
+        String query = "INSERT INTO users (Stadium_name, Location , Manager_Name, Capacity) " +
+                "VALUES ('"
+                + stadiumName + "','" + location + "','" + manageName + "','" + capacity + "');";
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
 }
