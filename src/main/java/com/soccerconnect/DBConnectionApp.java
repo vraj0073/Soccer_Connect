@@ -1,10 +1,6 @@
 package com.soccerconnect;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 public class DBConnectionApp {
@@ -148,6 +144,77 @@ public class DBConnectionApp {
             System.out.println(e);
         }
         return players;
+    }
+
+    public HashMap<String, String> getReceivedRequests(String toId){
+        HashMap<String, String> teams=new HashMap<>();
+        String query = "SELECT User_ID,Name from requests JOIN users ON From_ID=User_ID AND To_ID='"+toId+"';";
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                teams.put(rs.getString("User_ID"), rs.getString("Name"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return teams;
+    }
+
+    public void acceptRequest(String playerId, String teamId){
+        String query = "INSERT INTO PlayerStats (Player_ID, Team_ID) " +
+                "VALUES ('" + playerId + "','" + teamId + "');";
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public ArrayList<String> getTeamStats(String teamId){
+        ArrayList<String> teamStats = new ArrayList<>();
+        String query = "SELECT * from TeamStats WHERE Team_ID='"+teamId+"';";
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                teamStats = new ArrayList<>(Arrays.asList(rs.getString("NOM"),
+                        rs.getString("Goals"), rs.getString("Wins"),
+                        rs.getString("Losses"), rs.getString("Draws")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return teamStats;
+    }
+
+    public HashMap<String,String> getTeamPlayers(String teamId){
+        HashMap<String,String> teamPlayers = new HashMap<>();
+        String query = "SELECT Player_ID,Name from PlayerStats JOIN users ON Player_ID=User_ID AND Team_ID='"+teamId+"';";
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                teamPlayers.put(rs.getString("Player_ID"), rs.getString("Name"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return teamPlayers;
+    }
+
+    public void deletePlayer(String playerId, String teamId){
+        String query = "DELETE FROM PlayerStats " +
+                "WHERE PLAYER_ID='" + playerId + "' AND TEAM_ID='" + teamId + "';";
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
 }

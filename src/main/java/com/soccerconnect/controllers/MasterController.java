@@ -2,9 +2,6 @@ package com.soccerconnect.controllers;
 
 import com.soccerconnect.DBConnectionApp;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MasterController {
