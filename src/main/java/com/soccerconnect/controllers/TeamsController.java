@@ -1,6 +1,6 @@
 package com.soccerconnect.controllers;
 
-import com.soccerconnect.DBConnectionApp;
+import com.soccerconnect.models.TeamsModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,30 +11,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
-public class TeamsController extends MasterController{
+public class TeamsController extends UserController{
 
-    DBConnectionApp db = new DBConnectionApp();
+    TeamsModel tm = new TeamsModel();
 
-    @GetMapping(value = "/teams")
-    public String viewTeams(Model model)
+    @GetMapping(value = "/players")
+    public String viewPlayers(Model model)
     {
-        HashMap<Integer, String> teams = db.getTeams();
-        model.addAttribute("teams", teams);
-        return "viewTeams";
+        HashMap<Integer, String> players = tm.getPlayers(currentUserId);
+        model.addAttribute("players", players);
+        return "viewPlayers";
+    }
+
+    @RequestMapping(value = "/sendPlayerRequest")
+    public String getPlayerRequests(@RequestParam(value = "player") String playerID)
+    {
+        rqm.addRequest(MasterController.currentUserId, playerID);
+        return welcome();
     }
 
     @RequestMapping(value = "/sendTeamRequest")
     public String getTeamRequests(@RequestParam(value = "team") String teamId)
     {
-        db.addRequest(MasterController.currentUserId, teamId);
+        rqm.addRequest(MasterController.currentUserId, teamId);
         return welcome();
     }
 
     @GetMapping(value = "/pendingPlayerRequests")
     public String viewPendingPlayerRequests(Model model)
     {
-        HashMap<String, String> requestsSent = db.getRequests(currentUserId);
-        HashMap<String, String> requestsReceived = db.getReceivedRequests(currentUserId);
+        HashMap<String, String> requestsSent = rqm.getRequests(currentUserId);
+        HashMap<String, String> requestsReceived = rqm.getReceivedRequests(currentUserId);
         model.addAttribute("requestsSent", requestsSent);
         model.addAttribute("requestsReceived", requestsReceived);
         return "viewPendingPlayerReqs";
@@ -43,14 +50,14 @@ public class TeamsController extends MasterController{
     @RequestMapping(value = "/acceptPlayerRequest")
     public String acceptTeamRequests(@RequestParam(value = "acceptReqId") String playerId)
     {
-        db.acceptRequest(playerId, MasterController.currentUserId);
+        tm.acceptRequest(playerId, MasterController.currentUserId);
         return welcome();
     }
 
     @GetMapping(value = "/teamStats")
     public String getTeamStats(Model model)
     {
-        ArrayList<String> teamStats= db.getTeamStats(currentUserId);
+        ArrayList<String> teamStats= tm.getTeamStats(currentUserId);
         model.addAttribute("teamStats", teamStats);
         return "viewTeamStats";
     }
@@ -58,7 +65,7 @@ public class TeamsController extends MasterController{
     @GetMapping(value = "/viewPlayers")
     public String getPlayers(Model model)
     {
-        HashMap<String, String> teamPlayers = db.getTeamPlayers(MasterController.currentUserId);
+        HashMap<String, String> teamPlayers = tm.getTeamPlayers(MasterController.currentUserId);
         model.addAttribute("teamPlayers", teamPlayers);
         return "viewTeamPlayers";
     }
@@ -66,7 +73,7 @@ public class TeamsController extends MasterController{
     @RequestMapping(value = "/deletePlayer")
     public String deletePlayer(@RequestParam(value = "player") String playerId)
     {
-        db.deletePlayer(playerId, MasterController.currentUserId);
+        tm.deletePlayer(playerId, MasterController.currentUserId);
         return welcome();
     }
 

@@ -26,8 +26,8 @@ public class LoginController extends MasterController{
     public String loginSubmit(    @RequestParam(value = "email") String email,
                                   @RequestParam(value = "password") String password) {
 
-        MasterController.currentUserId = db.getUserId(email);
-        int RoleId = db.getRoleFromEmail(email);
+        MasterController.currentUserId = rm.getUserId(email);
+        int RoleId = rm.getRoleFromEmail(email);
         if (RoleId == 0) {
             return "welcomeAdmin";
         } else if (RoleId == 1) {
