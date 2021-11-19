@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
-import java.util.List;
 
 @Controller
 public class PlayersController extends MasterController{
@@ -33,6 +32,15 @@ public class PlayersController extends MasterController{
     {
         db.addRequest(MasterController.currentUserId, playerID);
         return welcome();
+    }
+
+    @RequestMapping(value = "/viewPlayerStats")
+    public String getPlayerStats(Model model)
+    {
+        System.out.println("playerId");
+        HashMap<String, String> playerStats = db.getPlayerStats(MasterController.currentUserId);
+        model.addAttribute("playerStats", playerStats);
+        return "playerStats";
     }
 
 }
