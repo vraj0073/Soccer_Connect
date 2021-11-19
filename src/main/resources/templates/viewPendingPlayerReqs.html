@@ -11,17 +11,23 @@
         <th>Player Name</th>
         <th>Status</th>
     </tr>
-    <tr th:each="request : ${requests}">
+    <tr th:each="request : ${requestsSent}">
         <td th:text="${request.key}"/>
         <td th:text="${request.value}"/>
     </tr>
 </table>
 <p>Received:</p>
+<form th:action="@{/acceptPlayerRequest}" method="post">
 <table>
     <tr>
         <th>Player Name</th>
         <th>Status</th>
     </tr>
+    <tr th:each="request : ${requestsReceived}">
+        <td th:text="${request.value}"/>
+        <td><button type="submit" th:value="${request.key}" name="acceptReqId">Accept Request</button></td>
+    </tr>
 </table>
+</form>
 </body>
 </html>
