@@ -1,15 +1,16 @@
 package com.soccerconnect.controllers;
 
-import com.soccerconnect.DBConnectionApp;
+import com.soccerconnect.models.RegistrationModel;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class RegisterController {
+public class RegisterController extends MasterController{
 
-    DBConnectionApp db = new DBConnectionApp();
+    RegistrationModel rem = new RegistrationModel();
 
     @GetMapping(value = "/register")
     public String registerForm()
@@ -26,7 +27,8 @@ public class RegisterController {
                                   @RequestParam(value = "repassword") String repassword,
                                   @RequestParam(value = "category") String category)
     {
-        db.registrationQuery(role, email, name,
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
+        rem.registrationQuery(role, email, name,
                 mobile, password, category);
         return "login";
     }
