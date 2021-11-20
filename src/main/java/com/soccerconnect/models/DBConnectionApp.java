@@ -11,11 +11,20 @@ public class DBConnectionApp {
     String URL = "jdbc:mysql://" + HOST + ":3306/" + SCHEMA;
     Connection conn;
 
-    public DBConnectionApp(){
+    public DBConnectionApp() {
         try {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    public int getRoleFromEmail(String currentUserId) {
+        return 0;
+    }
+
+
+    public String getUserId(String email) {
+        return null;
     }
 }
