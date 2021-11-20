@@ -6,13 +6,15 @@
 <body>
 
 <h2>Registration for a Ground</h2>
-<form th:action="@{/addGround}" method="post">
+<form th:action="@{/ground}" method="post">
     <p>Stadium name: <input type="text" th:name="stadiumName" /></p>
-    <p>Location: <input type="text" th:name="location" /></p>
+    <p>Stadium ID: <input type="text" th:name="stadiumId" /></p>
+    <p>Location: <input type="text" th:name="address" /></p>
     <p>Manager Name: <input type="text" th:name="managerName" /></p>
+    <p>Phone Number: <input type="text" th:name="phone" /></p>
+    <p>Email: <input type="text" th:name="email" /></p>
     <p>Capacity: <input type="text" th:name="capacity" /></p>
-
-    <p><input type="submit" value="Submit" /></p>
+<p><input type="submit" value="Submit" /></p>
 </form>
 
 </body>
