@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,4 +47,18 @@ public class PlayersController extends UserController{
         return "playerViewTeamStats";
     }
 
+    @GetMapping(value = "/viewPlayerTeams")
+    public String getPlayers(Model model)
+    {
+        HashMap<String, String> playersTeam = pm.getPlayersTeam(MasterController.currentUserId);
+        model.addAttribute("playersTeam", playersTeam);
+        return "playerLeaveTeam";
+    }
+
+    @RequestMapping(value = "/removeTeam")
+    public String removeTeam(@RequestParam(value = "player") String teamId)
+    {
+        pm.removeTeam(teamId, MasterController.currentUserId);
+        return welcome();
+    }
 }

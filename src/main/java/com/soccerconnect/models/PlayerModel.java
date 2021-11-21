@@ -56,13 +56,10 @@ public class PlayerModel extends DBConnectionApp{
 
     public HashMap<String, ArrayList<String>> getEachTeamStats(String id){
         HashMap<String, ArrayList<String>> teamStats=new HashMap<>();
-        ArrayList<String> myMapList  = new ArrayList<>();
         ArrayList<String> teamStatsList = new ArrayList<>();
 
         String query = "SELECT TeamStats.Team_ID, TeamStats.NOM, TeamStats.Goals, Wins, Losses, Draws " +
                 "FROM TeamStats INNER JOIN PlayerStats ON PlayerStats.Team_ID=TeamStats.Team_ID where PlayerStats.Player_ID = "+ id + ";";
-
-
 
         try{
             Statement stmt = conn.createStatement();
@@ -86,5 +83,32 @@ public class PlayerModel extends DBConnectionApp{
             System.out.println(e);
         }
         return teamStats;
+    }
+
+    public HashMap<String, String> getPlayersTeam(String id){
+        HashMap<String,String> playerTeams = new HashMap<>();
+        String query = "SELECT Player_ID,Team_id,users.Name from PlayerStats JOIN users ON Team_id=User_ID AND Player_ID='"+id+"';";
+
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                playerTeams.put(rs.getString("Team_id"), rs.getString("Name"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return playerTeams;
+    }
+
+    public void removeTeam(String teamId, String playerId){
+        String query = "DELETE FROM PlayerStats " +
+                "WHERE PLAYER_ID='" + playerId + "' AND TEAM_ID='" + teamId + "';";
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
