@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
@@ -35,6 +36,14 @@ public class PlayersController extends UserController{
         HashMap<String, String> playerStats = pm.getPlayerStats(MasterController.currentUserId);
         model.addAttribute("playerStats", playerStats);
         return "playerStats";
+    }
+
+    @RequestMapping(value = "/playerViewTeamStats")
+    public String getPlayerTeamStats(Model model)
+    {
+        HashMap<String, ArrayList<String>> teamStats = pm.getEachTeamStats(MasterController.currentUserId);
+        model.addAttribute("teamStats",teamStats);
+        return "playerViewTeamStats";
     }
 
 }

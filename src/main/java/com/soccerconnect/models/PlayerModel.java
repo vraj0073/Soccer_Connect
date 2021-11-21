@@ -3,6 +3,8 @@ package com.soccerconnect.models;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class PlayerModel extends DBConnectionApp{
@@ -50,5 +52,39 @@ public class PlayerModel extends DBConnectionApp{
             System.out.println(e);
         }
         return playerStats;
+    }
+
+    public HashMap<String, ArrayList<String>> getEachTeamStats(String id){
+        HashMap<String, ArrayList<String>> teamStats=new HashMap<>();
+        ArrayList<String> myMapList  = new ArrayList<>();
+        ArrayList<String> teamStatsList = new ArrayList<>();
+
+        String query = "SELECT TeamStats.Team_ID, TeamStats.NOM, TeamStats.Goals, Wins, Losses, Draws " +
+                "FROM TeamStats INNER JOIN PlayerStats ON PlayerStats.Team_ID=TeamStats.Team_ID where PlayerStats.Player_ID = "+ id + ";";
+
+
+
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                teamStatsList = new ArrayList<>(Arrays.asList(rs.getString("NOM"),
+                        rs.getString("Goals"), rs.getString("Wins"),
+                        rs.getString("Losses"), rs.getString("Draws")));
+
+                String query2 = "SELECT Name from users where user_id ="+rs.getString("Team_ID") +";";
+                Statement stmt2 = conn.createStatement();
+                ResultSet rs2 = stmt2.executeQuery(query2);
+                rs2.next();
+
+                teamStats.put(rs2.getString(1),teamStatsList);
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return teamStats;
     }
 }
