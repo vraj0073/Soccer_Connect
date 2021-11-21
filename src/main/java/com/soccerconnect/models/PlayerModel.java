@@ -26,7 +26,7 @@ public class PlayerModel extends DBConnectionApp{
     }
 
     public HashMap<String, String> getPlayerStats(String id){
-        System.out.println("id: "+id);
+
         HashMap<String, String> playerStats=new HashMap<>();
         String query = "SELECT sum(goals) as totalGoals,sum(assists) as totalAssists,sum(goals_saved) as totalGoalsSaved," +
                 "sum(yellow_Card) as totalYellowCard,sum(red_card) as totalRedCard,sum(MOM) as totalMOM, sum(NOM) as totalNOM" +
