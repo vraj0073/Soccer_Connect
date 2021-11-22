@@ -4,7 +4,10 @@ import com.soccerconnect.models.PlayerModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
@@ -28,4 +31,34 @@ public class PlayersController extends UserController{
         return "viewPendingTeamReqs";
     }
 
+    @RequestMapping(value = "/viewPlayerStats")
+    public String getPlayerStats(Model model)
+    {
+        HashMap<String, String> playerStats = pm.getPlayerStats(MasterController.currentUserId);
+        model.addAttribute("playerStats", playerStats);
+        return "playerStats";
+    }
+
+    @RequestMapping(value = "/playerViewTeamStats")
+    public String getPlayerTeamStats(Model model)
+    {
+        HashMap<String, ArrayList<String>> teamStats = pm.getEachTeamStats(MasterController.currentUserId);
+        model.addAttribute("teamStats",teamStats);
+        return "playerViewTeamStats";
+    }
+
+    @GetMapping(value = "/viewPlayerTeams")
+    public String getPlayers(Model model)
+    {
+        HashMap<String, String> playersTeam = pm.getPlayersTeam(MasterController.currentUserId);
+        model.addAttribute("playersTeam", playersTeam);
+        return "playerLeaveTeam";
+    }
+
+    @RequestMapping(value = "/removeTeam")
+    public String removeTeam(@RequestParam(value = "player") String teamId)
+    {
+        pm.removeTeam(teamId, MasterController.currentUserId);
+        return welcome();
+    }
 }
