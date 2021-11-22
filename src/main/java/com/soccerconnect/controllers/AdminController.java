@@ -57,14 +57,12 @@ public class AdminController extends MasterController{
 
     @RequestMapping(value = "/ground")
     public String addGround(        @RequestParam(value = "stadiumName") String stadiumName,
-                                    @RequestParam(value = "stadiumId") String stadiumId,
                                     @RequestParam(value = "address") String address,
-                                    @RequestParam(value = "managerName") String managerName,
+                                    @RequestParam(value = "postalCode") String postalCode,
                                     @RequestParam(value = "phone") String phone,
-                                    @RequestParam(value = "email") String email,
-                                    @RequestParam(value = "capacity") String capacity){
-        System.out.println(stadiumName +stadiumId + address + managerName +phone +email +capacity);
-        addg.groundQuery(stadiumName, stadiumId, address, managerName, phone, email, capacity, capacity);
+                                    @RequestParam(value = "email") String email){
+        System.out.println(stadiumName + address + postalCode +phone +email );
+        addg.groundQuery(stadiumName, address, postalCode, phone, email);
         return "welcomeAdmin";
     }
 }
