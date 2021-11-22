@@ -18,13 +18,4 @@ public class DBConnectionApp {
             System.out.println(e);
         }
     }
-
-    public int getRoleFromEmail(String currentUserId) {
-        return 0;
-    }
-
-
-    public String getUserId(String email) {
-        return null;
-    }
 }

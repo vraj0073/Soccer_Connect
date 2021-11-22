@@ -1,15 +1,13 @@
 package com.soccerconnect.controllers;
 
-
+import com.soccerconnect.models.AdminModel;
 import com.soccerconnect.models.AddGround;
 
 import org.springframework.stereotype.Controller;
-import com.soccerconnect.models.AdminModel;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.HashMap;
 
 @Controller
@@ -61,7 +59,6 @@ public class AdminController extends MasterController{
                                     @RequestParam(value = "postalCode") String postalCode,
                                     @RequestParam(value = "phone") String phone,
                                     @RequestParam(value = "email") String email){
-        System.out.println(stadiumName + address + postalCode +phone +email );
         addg.groundQuery(stadiumName, address, postalCode, phone, email);
         return "welcomeAdmin";
     }
