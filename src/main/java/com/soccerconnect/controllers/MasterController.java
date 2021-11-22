@@ -10,7 +10,6 @@ public class MasterController {
     public static String currentUserId;
     DBConnectionApp db = new DBConnectionApp();
     RolesModel rm = new RolesModel();
-
     public String welcome() {
         if (currentUserId != null) {
             int RoleId = rm.getRoleFromUserId(currentUserId);

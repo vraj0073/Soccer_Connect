@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add a Ground</title>
+</head>
+<body>
+
+<h2>Registration for a Ground</h2>
+<form th:action="@{/ground}" method="post">
+    <p>Stadium name: <input type="text" th:name="stadiumName" /></p>
+    <p>Location: <input type="text" th:name="address" /></p>
+    <p>Postal Code: <input type="text" th:name="postalCode" /></p>
+    <p>Phone Number: <input type="text" th:name="phone" /></p>
+    <p>Email: <input type="text" th:name="email" /></p>
+    
+<p><input type="submit" value="Submit" /></p>
+</form>
+
+</body>
+</html>

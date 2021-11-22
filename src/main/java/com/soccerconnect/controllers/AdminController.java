@@ -1,18 +1,20 @@
 package com.soccerconnect.controllers;
 
 import com.soccerconnect.models.AdminModel;
+import com.soccerconnect.models.AddGround;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.HashMap;
 
 @Controller
 public class AdminController extends MasterController{
 
     AdminModel am = new AdminModel();
+    AddGround addg = new AddGround();
 
     @GetMapping(value = "/viewAllPlayers")
     public String viewPlayers(Model model)
@@ -42,5 +44,22 @@ public class AdminController extends MasterController{
     {
         am.deleteUser(teamId);
         return welcome();
+    }
+
+    @GetMapping(value = "/ground")
+    public String addGround()
+    {
+        return "ground";
+    }
+
+
+    @RequestMapping(value = "/ground")
+    public String addGround(        @RequestParam(value = "stadiumName") String stadiumName,
+                                    @RequestParam(value = "address") String address,
+                                    @RequestParam(value = "postalCode") String postalCode,
+                                    @RequestParam(value = "phone") String phone,
+                                    @RequestParam(value = "email") String email){
+        addg.groundQuery(stadiumName, address, postalCode, phone, email);
+        return "welcomeAdmin";
     }
 }

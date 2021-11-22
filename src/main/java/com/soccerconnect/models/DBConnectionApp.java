@@ -11,10 +11,10 @@ public class DBConnectionApp {
     String URL = "jdbc:mysql://" + HOST + ":3306/" + SCHEMA;
     Connection conn;
 
-    public DBConnectionApp(){
+    public DBConnectionApp() {
         try {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
     }
