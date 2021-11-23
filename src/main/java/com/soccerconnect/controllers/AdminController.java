@@ -2,22 +2,15 @@ package com.soccerconnect.controllers;
 
 import com.soccerconnect.models.AdminModel;
 import com.soccerconnect.models.AddGround;
-import com.soccerconnect.models.DBConnectionApp;
 
 import com.soccerconnect.models.Organize;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.HashMap;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 
 @Controller
 public class AdminController extends MasterController{
@@ -56,39 +49,40 @@ public class AdminController extends MasterController{
         return welcome();
     }
 
-    @GetMapping(value = "/ground")
+    @GetMapping(value = "/addGround")
     public String addGround()
     {
-        return "ground";
+        return "addGround";
     }
 
-    @GetMapping(value = "/organize")
-    public String organize(){return "organize"; }
-
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder){
-        binder.registerCustomEditor(       Date.class,
-                new CustomDateEditor(new SimpleDateFormat("MM/dd/yyyy"), true, 10));
+    @GetMapping(value = "/organizeGame")
+    public String organize(Model model)
+    {
+        HashMap<Integer, String> teams = am.getAllTeams();
+        HashMap<Integer, String> grounds = addg.getAllGrounds();
+        model.addAttribute("teams", teams);
+        model.addAttribute("grounds", grounds);
+        return "organizeGame";
     }
+
     @RequestMapping(value = "/ground")
-    public String addGround(        @RequestParam(value = "stadiumName") String stadiumName,
-                                    @RequestParam(value = "address") String address,
-                                    @RequestParam(value = "postalCode") String postalCode,
-                                    @RequestParam(value = "phone") String phone,
-                                    @RequestParam(value = "email") String email){
-        addg.groundQuery(stadiumName, address, postalCode, phone, email);
+    public String addGround(@RequestParam(value = "stadiumName") String groundName,
+                            @RequestParam(value = "address") String address,
+                            @RequestParam(value = "postalCode") String postalCode,
+                            @RequestParam(value = "phone") String phone,
+                            @RequestParam(value = "email") String email) {
+        addg.groundQuery(groundName, address, postalCode, phone, email);
         return "welcomeAdmin";
     }
+
     @RequestMapping(value = "/organize")
-    public String organize(    @RequestParam(value = "category") String category,
-                                    @RequestParam(value = "Team1") String Team1,
-                                    @RequestParam(value = "Team2") String Team2,
-                                    @RequestParam(value = "stadium") String stadium,
-                                    @RequestParam(value = "date") String  date,
-                                    @RequestParam(value = "Time") String Time){
-        System.out.println(category +Team1 + Team2 + stadium +date +Time );
-        orgGame.organize(category,Team1,Team2, stadium, date, Time);
+    public String organize(@RequestParam(value = "category") String category,
+                           @RequestParam(value = "team1") String team1,
+                           @RequestParam(value = "team2") String team2,
+                           @RequestParam(value = "ground") String ground,
+                           @RequestParam(value = "date") String date,
+                           @RequestParam(value = "time") String time) {
+        orgGame.organize(category, team1, team2, ground, date, time);
         return "welcomeAdmin";
     }
 }
