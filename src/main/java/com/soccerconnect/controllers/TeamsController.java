@@ -54,6 +54,13 @@ public class TeamsController extends UserController{
         return welcome();
     }
 
+    @RequestMapping(value = "/rejectPlayerRequest")
+    public String rejectTeamRequests(@RequestParam(value = "rejectReqId") String playerId)
+    {
+        tm.rejectRequest(playerId, MasterController.currentUserId);
+        return welcome();
+    }
+
     @GetMapping(value = "/teamStats")
     public String getTeamStats(Model model)
     {

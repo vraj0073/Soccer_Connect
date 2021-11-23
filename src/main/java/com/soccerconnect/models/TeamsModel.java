@@ -40,6 +40,19 @@ public class TeamsModel extends DBConnectionApp{
         }
     }
 
+    public void rejectRequest(String playerId, String teamId) {
+
+        String rejectQuery = "DELETE FROM requests where To_ID='" + teamId + "' AND From_ID='" + playerId + "';";
+
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(rejectQuery);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
     public ArrayList<String> getTeamStats(String teamId){
         ArrayList<String> teamStats = new ArrayList<>();
         String query = "SELECT * from TeamStats WHERE Team_ID='"+teamId+"';";
@@ -83,4 +96,6 @@ public class TeamsModel extends DBConnectionApp{
             System.out.println(e);
         }
     }
+
+    
 }
