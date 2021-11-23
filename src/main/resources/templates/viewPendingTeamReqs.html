@@ -25,7 +25,7 @@
         </tr>
         <tr th:each="request : ${requestsReceived}">
             <td th:text="${request.value}"/>
-            <td><button type="submit" th:value="${request.key}" name="acceptReqId_Team">Accept Request</button></td>
+            <td><button type="submit" th:value="${request.key}" name="acceptReqIdTeam">Accept Request</button></td>
         </tr>
     </table>
     </form>

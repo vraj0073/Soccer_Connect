@@ -25,7 +25,7 @@ public class PlayersController extends UserController{
 
     
     @RequestMapping(value = "/acceptTeamRequest")
-    public String acceptPlayerRequest(@RequestParam(value="acceptReqId_Team") String TeamId){
+    public String acceptPlayerRequest(@RequestParam(value="acceptReqIdTeam") String TeamId){
         pm.acceptRequest(TeamId, MasterController.currentUserId);
         return welcome();
     }
