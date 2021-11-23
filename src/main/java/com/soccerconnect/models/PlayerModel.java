@@ -111,4 +111,19 @@ public class PlayerModel extends DBConnectionApp{
             System.out.println(e);
         }
     }
+
+    public void acceptRequest(String teamId, String playerId) {
+       
+        String query = "INSERT INTO PlayerStats (Player_ID, Team_ID) " +
+                "VALUES ('" + playerId + "','" + teamId + "');";
+        String deleteQuery = "DELETE FROM requests where To_ID='" + playerId + "' AND From_ID='" + teamId + "';";
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            stmt.executeUpdate(deleteQuery);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }

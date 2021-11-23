@@ -17,11 +17,17 @@
     </tr>
 </table>
 <p>Received:</p>
-<table>
-    <tr>
-        <th>Team Name</th>
-        <th>Status</th>
-    </tr>
-</table>
+<form th:action="@{/acceptTeamRequest}" method="post">
+    <table>
+        <tr>
+            <th>Team Name</th>
+            <th>Status</th>
+        </tr>
+        <tr th:each="request : ${requestsReceived}">
+            <td th:text="${request.value}"/>
+            <td><button type="submit" th:value="${request.key}" name="acceptReqIdTeam">Accept Request</button></td>
+        </tr>
+    </table>
+    </form>
 </body>
 </html>

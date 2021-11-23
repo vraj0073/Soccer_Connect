@@ -23,11 +23,20 @@ public class PlayersController extends UserController{
         return "viewTeams";
     }
 
+    
+    @RequestMapping(value = "/acceptTeamRequest")
+    public String acceptPlayerRequest(@RequestParam(value="acceptReqIdTeam") String TeamId){
+        pm.acceptRequest(TeamId, MasterController.currentUserId);
+        return welcome();
+    }
+
     @GetMapping(value = "/pendingTeamRequests")
     public String viewPendingTeamRequests(Model model)
     {
-        HashMap<String, String> requests = rqm.getRequests(currentUserId);
-        model.addAttribute("requests", requests);
+        HashMap<String, String> requestsSent = rqm.getRequests(currentUserId);
+        HashMap<String, String> requestsReceived = rqm.getReceivedRequests(currentUserId);
+        model.addAttribute("requestsSent", requestsSent);
+        model.addAttribute("requestsReceived", requestsReceived);
         return "viewPendingTeamReqs";
     }
 
@@ -61,4 +70,6 @@ public class PlayersController extends UserController{
         pm.removeTeam(teamId, MasterController.currentUserId);
         return welcome();
     }
+
+    
 }
