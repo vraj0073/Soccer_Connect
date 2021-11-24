@@ -28,6 +28,21 @@
             <td><button type="submit" th:value="${request.key}" name="acceptReqIdTeam">Accept Request</button></td>
         </tr>
     </table>
-    </form>
+</form>
+
+<p>Reject Team:</p>
+
+<form th:action="@{/rejectTeamRequest}" method="post">
+        <table>
+            <tr>
+                <th>Team Name</th>
+                <th>Status</th>
+            </tr>
+            <tr th:each="request : ${requestsReceived}">
+                <td th:text="${request.value}"/>
+                <td><button type="submit" th:value="${request.key}" name="rejectReqIdTeam">Reject Request</button></td>
+            </tr>
+        </table>
+        </form>
 </body>
 </html>

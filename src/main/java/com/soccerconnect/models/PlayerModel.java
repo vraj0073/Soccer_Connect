@@ -126,4 +126,17 @@ public class PlayerModel extends DBConnectionApp{
             System.out.println(e);
         }
     }
+    
+    public void rejectRequest(String teamId, String playerId) {
+
+        String rejectQuery = "DELETE FROM requests where To_ID='" + playerId + "' AND From_ID='" + teamId + "';";
+
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(rejectQuery);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
