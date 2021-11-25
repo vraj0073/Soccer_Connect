@@ -1,29 +1,30 @@
-package com.soccerconnect.models;
+package com.soccerconnect.database.queries;
+
+import com.soccerconnect.database.DBConnectionApp;
+import com.soccerconnect.models.PlayerModel;
+import com.soccerconnect.models.TeamStatsModel;
+import com.soccerconnect.models.TeamModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
-public class TeamsModel extends DBConnectionApp{
-    public HashMap<Integer, String> getPlayers(String teamId){
-        HashMap<Integer, String> players=new HashMap<>();
-        String query = "SELECT User_ID,Name from users where Role_Id='1' AND User_ID NOT IN " +
-                "(SELECT Player_ID from PlayerStats where Team_ID='"+ teamId +"' UNION SELECT From_ID from " +
-                "requests where To_ID='"+ teamId +"');";
+public class TeamsQueries extends DBConnectionApp {
+    public ArrayList<TeamModel> getTeams(){
+        ArrayList<TeamModel> teams=new ArrayList<>();
+        String query = "SELECT User_ID,Name from users where Role_Id='2';";
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                players.put(rs.getInt("User_ID"), rs.getString("Name"));
+                teams.add(new TeamModel(rs.getString("User_ID"), rs.getString("Name")));
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return players;
+        return teams;
     }
 
     public void acceptRequest(String playerId, String teamId){
@@ -53,16 +54,17 @@ public class TeamsModel extends DBConnectionApp{
         }
     }
 
-    public ArrayList<String> getTeamStats(String teamId){
-        ArrayList<String> teamStats = new ArrayList<>();
-        String query = "SELECT * from TeamStats WHERE Team_ID='"+teamId+"';";
-        try{
+    public TeamStatsModel getTeamStats(String teamId) {
+
+        TeamStatsModel teamStats = null;
+        String query = "SELECT * from TeamStats WHERE Team_ID='" + teamId + "';";
+        try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                teamStats = new ArrayList<>(Arrays.asList(rs.getString("NOM"),
+                teamStats = new TeamStatsModel(teamId, rs.getString("NOM"),
                         rs.getString("Goals"), rs.getString("Wins"),
-                        rs.getString("Losses"), rs.getString("Draws")));
+                        rs.getString("Losses"), rs.getString("Draws"), null);
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -70,14 +72,14 @@ public class TeamsModel extends DBConnectionApp{
         return teamStats;
     }
 
-    public HashMap<String,String> getTeamPlayers(String teamId){
-        HashMap<String,String> teamPlayers = new HashMap<>();
+    public ArrayList<PlayerModel> getTeamPlayers(String teamId){
+        ArrayList<PlayerModel> teamPlayers = new ArrayList<>();
         String query = "SELECT Player_ID,Name from PlayerStats JOIN users ON Player_ID=User_ID AND Team_ID='"+teamId+"';";
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                teamPlayers.put(rs.getString("Player_ID"), rs.getString("Name"));
+                teamPlayers.add(new PlayerModel(rs.getString("Player_ID"), rs.getString("Name")));
             }
         } catch (SQLException e) {
             System.out.println(e);

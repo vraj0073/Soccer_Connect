@@ -1,11 +1,13 @@
-package com.soccerconnect.models;
+package com.soccerconnect.database.queries;
+
+import com.soccerconnect.database.DBConnectionApp;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
-public class RequestsModel extends DBConnectionApp{
+public class RequestsQueries extends DBConnectionApp {
     public HashMap<String, String> getRequests(String fromId){
         HashMap<String, String> teams=new HashMap<>();
         String query = "SELECT Name,Status from requests JOIN users ON To_ID=User_ID AND From_ID='"+fromId+"';";

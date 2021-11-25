@@ -1,4 +1,4 @@
-package com.soccerconnect.models;
+package com.soccerconnect.database;
 
 import java.sql.*;
 
@@ -9,7 +9,7 @@ public class DBConnectionApp {
     String USER = "CSCI5308_15_TEST_USER";
     String PASSWORD = "ooquiekieRoo5nah";
     String URL = "jdbc:mysql://" + HOST + ":3306/" + SCHEMA;
-    Connection conn;
+    public Connection conn;
 
     public DBConnectionApp() {
         try {

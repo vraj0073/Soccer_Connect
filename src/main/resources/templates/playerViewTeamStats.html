@@ -16,13 +16,13 @@
             <td><b>Draws</b></td>
         </tr>
         <tr th:each="teamStat: ${teamStats}">
-            <td th:text="${teamStat.key}"></td>
+            <td th:text="${teamStat.teamName}"></td>
 
-            <td th:text="${teamStat.value[0]}"></td>
-            <td th:text="${teamStat.value[1]}"></td>
-            <td th:text="${teamStat.value[2]}"></td>
-            <td th:text="${teamStat.value[3]}"></td>
-            <td th:text="${teamStat.value[4]}"></td>
+            <td th:text="${teamStat.nom}"></td>
+            <td th:text="${teamStat.goals}"></td>
+            <td th:text="${teamStat.wins}"></td>
+            <td th:text="${teamStat.losses}"></td>
+            <td th:text="${teamStat.draws}"></td>
         </tr>
     </table>
 </body>

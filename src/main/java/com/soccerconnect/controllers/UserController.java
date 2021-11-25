@@ -1,7 +1,11 @@
 package com.soccerconnect.controllers;
 
-import com.soccerconnect.models.RequestsModel;
+import com.soccerconnect.database.queries.PlayerQueries;
+import com.soccerconnect.database.queries.RequestsQueries;
+import com.soccerconnect.database.queries.TeamsQueries;
 
 public class UserController extends MasterController{
-    RequestsModel rqm = new RequestsModel();
+    PlayerQueries pq = new PlayerQueries();
+    TeamsQueries tq = new TeamsQueries();
+    RequestsQueries rqq = new RequestsQueries();
 }

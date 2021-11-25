@@ -12,8 +12,8 @@
         <th>Status</th>
     </tr>
     <tr th:each="player : ${teamPlayers}">
-        <td th:text="${player.value}"/>
-        <td><button type="submit" th:value="${player.key}" name="player">Remove Player</button></td>
+        <td th:text="${player.name}"/>
+        <td><button type="submit" th:value="${player.userId}" name="player">Remove Player</button></td>
     </tr>
     </table>
 </form>

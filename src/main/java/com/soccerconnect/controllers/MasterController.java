@@ -1,7 +1,7 @@
 package com.soccerconnect.controllers;
 
-import com.soccerconnect.models.DBConnectionApp;
-import com.soccerconnect.models.RolesModel;
+import com.soccerconnect.database.DBConnectionApp;
+import com.soccerconnect.database.queries.RolesQueries;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -9,10 +9,11 @@ public class MasterController {
 
     public static String currentUserId;
     DBConnectionApp db = new DBConnectionApp();
-    RolesModel rm = new RolesModel();
+    RolesQueries rq = new RolesQueries();
+
     public String welcome() {
         if (currentUserId != null) {
-            int RoleId = rm.getRoleFromUserId(currentUserId);
+            int RoleId = rq.getRoleFromUserId(currentUserId);
             if (RoleId == 0) {
                 return "welcomeAdmin";
             } else if (RoleId == 1) {
