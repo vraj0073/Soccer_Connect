@@ -1,18 +1,18 @@
 package com.soccerconnect.controllers;
 
-
-import com.soccerconnect.models.LoginModel;
+import com.soccerconnect.database.queries.LoginQueries;
+import com.soccerconnect.models.UserModel;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
 public class LoginController extends MasterController{
 
-    LoginModel lm = new LoginModel();
+    LoginQueries lq = new LoginQueries();
 
     @GetMapping(value = "/")
     public String index()
@@ -27,22 +27,12 @@ public class LoginController extends MasterController{
     }
 
     @RequestMapping(value = "/loginsubmission")
-    public String loginSubmit(    @RequestParam(value = "email") String email,
-                                  @RequestParam(value = "password") String password) {
+    public String loginSubmit(@ModelAttribute UserModel user) {
 
-        String passwordDb = lm.getPasswordFromEmail(email);
-        if (BCrypt.checkpw(password, passwordDb)) {
-            MasterController.currentUserId = rm.getUserId(email);
-            int RoleId = rm.getRoleFromEmail(email);
-            if (RoleId == 0) {
-                return "welcomeAdmin";
-            } else if (RoleId == 1) {
-                return "welcomePlayer";
-            } else if (RoleId == 2) {
-                return "welcomeTeam";
-            } else {
-                return "login";
-            }
+        String passwordDb = lq.getPasswordFromEmail(user.getEmail());
+        if (BCrypt.checkpw(user.getPassword(), passwordDb)) {
+            MasterController.currentUserId = rq.getUserId(user.getEmail());
+            return welcome();
         }
         else return "login";
     }

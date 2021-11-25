@@ -1,28 +1,35 @@
 package com.soccerconnect.controllers;
 
-import com.soccerconnect.models.AdminModel;
-import com.soccerconnect.models.AddGround;
+import com.soccerconnect.database.queries.AdminQueries;
+import com.soccerconnect.database.queries.GroundQueries;
+import com.soccerconnect.database.queries.GamesQueries;
 
-import com.soccerconnect.models.Organize;
+import com.soccerconnect.models.GameModel;
+import com.soccerconnect.models.PlayerModel;
+import com.soccerconnect.models.TeamModel;
+import com.soccerconnect.models.GroundModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 @Controller
 public class AdminController extends MasterController{
 
-    AdminModel am = new AdminModel();
-    AddGround addg = new AddGround();
-    Organize orgGame = new Organize();
+    AdminQueries aq = new AdminQueries();
+    GroundQueries gq = new GroundQueries();
+    GamesQueries gaq = new GamesQueries();
 
     @GetMapping(value = "/viewAllPlayers")
     public String viewPlayers(Model model)
     {
-        HashMap<Integer, String> players = am.getAllPlayers();
+        ArrayList<PlayerModel> players = aq.getAllPlayers();
         model.addAttribute("players", players);
         return "viewAllPlayers";
     }
@@ -30,14 +37,14 @@ public class AdminController extends MasterController{
     @RequestMapping(value = "/adminDeletePlayer")
     public String deletePlayer(@RequestParam(value = "player") String playerId)
     {
-        am.deleteUser(playerId);
+        aq.deleteUser(playerId);
         return welcome();
     }
 
     @GetMapping(value = "/viewAllTeams")
     public String viewTeams(Model model)
     {
-        HashMap<Integer, String> teams = am.getAllTeams();
+        ArrayList<TeamModel> teams = aq.getAllTeams();
         model.addAttribute("teams", teams);
         return "viewAllTeams";
     }
@@ -45,7 +52,7 @@ public class AdminController extends MasterController{
     @RequestMapping(value = "/adminDeleteTeam")
     public String deleteTeam(@RequestParam(value = "team") String teamId)
     {
-        am.deleteUser(teamId);
+        aq.deleteUser(teamId);
         return welcome();
     }
 
@@ -55,34 +62,55 @@ public class AdminController extends MasterController{
         return "addGround";
     }
 
-    @GetMapping(value = "/organizeGame")
-    public String organize(Model model)
+    @RequestMapping(value = "/ground")
+    public String addGround(@ModelAttribute GroundModel ground) {
+        gq.groundQuery(ground.getGroundName(), ground.getAddress(),
+                ground.getPostalCode(), ground.getContact(), ground.getEmail());
+        return "welcomeAdmin";
+    }
+
+    @GetMapping(value = "/viewAllGrounds")
+    public String viewGrounds(Model model)
     {
-        HashMap<Integer, String> teams = am.getAllTeams();
-        HashMap<Integer, String> grounds = addg.getAllGrounds();
+        ArrayList<GroundModel> grounds = gq.getAllGrounds();
+        model.addAttribute("grounds", grounds);
+        return "viewAllGrounds";
+    }
+
+    @RequestMapping(value = "/adminDeleteGround")
+    public String deleteGround(@RequestParam(value = "ground") String groundId)
+    {
+        gq.deleteGround(groundId);
+        return welcome();
+    }
+
+    @GetMapping(value = "/organizeGame")
+    public String organizeGame(Model model)
+    {
+        ArrayList<TeamModel> teams = aq.getAllTeams();
+        ArrayList<GroundModel> grounds = gq.getAllGrounds();
         model.addAttribute("teams", teams);
         model.addAttribute("grounds", grounds);
         return "organizeGame";
     }
 
-    @RequestMapping(value = "/ground")
-    public String addGround(@RequestParam(value = "stadiumName") String groundName,
-                            @RequestParam(value = "address") String address,
-                            @RequestParam(value = "postalCode") String postalCode,
-                            @RequestParam(value = "phone") String phone,
-                            @RequestParam(value = "email") String email) {
-        addg.groundQuery(groundName, address, postalCode, phone, email);
+    @RequestMapping(value = "/organize")
+    public String organize(@ModelAttribute GameModel game) {
+        gaq.organize(game.getCategory(), game.getTeam1Id(), game.getTeam2Id(),
+                game.getGroundId(), game.getDate(), game.getTime());
         return "welcomeAdmin";
     }
 
-    @RequestMapping(value = "/organize")
-    public String organize(@RequestParam(value = "category") String category,
-                           @RequestParam(value = "team1") String team1,
-                           @RequestParam(value = "team2") String team2,
-                           @RequestParam(value = "ground") String ground,
-                           @RequestParam(value = "date") String date,
-                           @RequestParam(value = "time") String time) {
-        orgGame.organize(category, team1, team2, ground, date, time);
-        return "welcomeAdmin";
+    @GetMapping(value = "/viewGames")
+    public String viewGames(Model model)
+    {
+        ArrayList<GameModel> games = gaq.getGames();
+        HashMap<String, String> teamIdToName = aq.getTeamIdToName();
+        HashMap<String, String> groundIdToName = aq.getGroundIdToName();
+        model.addAttribute("teamIdToName", teamIdToName);
+        model.addAttribute("groundIdToName", groundIdToName);
+        model.addAttribute("games", games);
+        return "viewGames";
     }
+
 }

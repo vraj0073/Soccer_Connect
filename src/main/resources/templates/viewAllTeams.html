@@ -12,8 +12,8 @@
         <th>Remove Team</th>
     </tr>
     <tr th:each="team : ${teams}">
-        <td th:text="${team.value}"/>
-        <td><button type="submit" th:value="${team.key}" name="team">Delete Team</button></td>
+        <td th:text="${team.name}"/>
+        <td><button type="submit" th:value="${team.userId}" name="team">Delete Team</button></td>
     </tr>
     </table>
 </form>

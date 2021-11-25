@@ -1,16 +1,17 @@
 package com.soccerconnect.controllers;
 
-import com.soccerconnect.models.RegistrationModel;
+import com.soccerconnect.database.queries.RegistrationQueries;
+import com.soccerconnect.models.UserModel;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class RegisterController extends MasterController{
 
-    RegistrationModel rem = new RegistrationModel();
+    RegistrationQueries req = new RegistrationQueries();
 
     @GetMapping(value = "/register")
     public String registerForm()
@@ -19,17 +20,11 @@ public class RegisterController extends MasterController{
     }
 
     @RequestMapping(value = "/registersubmission")
-    public String registerSubmit( @RequestParam(value = "role") String role,
-                                  @RequestParam(value = "email") String email,
-                                  @RequestParam(value = "name") String name,
-                                  @RequestParam(value = "mobile") String mobile,
-                                  @RequestParam(value = "password") String password,
-                                  @RequestParam(value = "repassword") String repassword,
-                                  @RequestParam(value = "category") String category)
+    public String registerSubmit(@ModelAttribute UserModel user)
     {
-        password = BCrypt.hashpw(password, BCrypt.gensalt());
-        rem.registrationQuery(role, email, name,
-                mobile, password, category);
+        String password = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        req.registrationQuery(user.getRole(), user.getEmail(), user.getName(),
+                user.getMobile(), password, user.getCategory());
         return "login";
     }
 }

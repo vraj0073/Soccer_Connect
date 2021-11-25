@@ -1,10 +1,12 @@
-package com.soccerconnect.models;
+package com.soccerconnect.database.queries;
+
+import com.soccerconnect.database.DBConnectionApp;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class RolesModel extends DBConnectionApp{
+public class RolesQueries extends DBConnectionApp {
     public int getRoleFromEmail(String email){
         int roleID = -1;
         String query = "SELECT Role_ID from users where Email_ID='" + email + "';";

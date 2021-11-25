@@ -12,9 +12,9 @@
                 <th>Player</th>
                 <th>Status</th>
             </tr>
-            <tr th:each="team : ${playersTeam}">
-                <td th:text="${team.value}"/>
-                <td><button type="submit" th:value="${team.key}" name="player">Leave Team</button></td>
+            <tr th:each="team : ${playersTeams}">
+                <td th:text="${team.name}"/>
+                <td><button type="submit" th:value="${team.userId}" name="team">Leave Team</button></td>
             </tr>
         </table>
     </form>
