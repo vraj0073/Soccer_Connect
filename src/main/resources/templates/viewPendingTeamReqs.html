@@ -11,7 +11,7 @@
         <th>Team Name</th>
         <th>Status</th>
     </tr>
-    <tr th:each="request : ${requests}">
+    <tr th:each="request : ${requestsSent}">
         <td th:text="${request.key}"/>
         <td th:text="${request.value}"/>
     </tr>
