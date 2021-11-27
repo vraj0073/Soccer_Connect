@@ -11,6 +11,7 @@ public class PlayerStatsModel {
     String yellowCards;
     String redCards;
     String mom;
+    String playerName;
 
     public PlayerStatsModel(String playerId, String nom, String goals, String asst,
                             String goalsSaved, String yellowCard, String redCard, String mom) {
@@ -22,6 +23,14 @@ public class PlayerStatsModel {
         this.yellowCards = yellowCard;
         this.redCards = redCard;
         this.mom = mom;
+    }
+
+    public PlayerStatsModel(String playerId, String playerName) {
+        this.playerId = playerId;
+        this.playerName = playerName;
+    }
+
+    public PlayerStatsModel() {
     }
 
     public String getPlayerId() {
@@ -96,4 +105,11 @@ public class PlayerStatsModel {
         this.mom = mom;
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
 }
