@@ -6,6 +6,7 @@ import com.soccerconnect.database.queries.GamesQueries;
 
 import com.soccerconnect.database.queries.TeamsQueries;
 import com.soccerconnect.models.*;
+import com.soccerconnect.models.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 
@@ -33,9 +35,13 @@ public class AdminController extends MasterController{
     }
 
     @RequestMapping(value = "/adminDeletePlayer")
-    public String deletePlayer(@RequestParam(value = "player") String playerId)
+    public String deletePlayer(@RequestParam(value = "player") String playerId, HttpSession session)
     {
-        aq.deleteUser(playerId);
+        UserModel user = (UserModel)session.getAttribute("user");
+        if(user !=null){
+            aq.deleteUser(playerId);
+
+        }
         return welcome();
     }
 
