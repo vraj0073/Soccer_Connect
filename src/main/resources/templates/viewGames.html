@@ -18,9 +18,9 @@
     </tr>
     <tr th:each="game : ${games}">
       <td th:text="${game.gameId}"/>
-      <td th:text="${teamIdToName.get(game.team1Id)}"/>
-      <td th:text="${teamIdToName.get(game.team2Id)}"/>
-      <td th:text="${groundIdToName.get(game.groundId)}"/>
+      <td th:text="${game.team1Name}"/>
+      <td th:text="${game.team2Name}"/>
+      <td th:text="${game.groundName}"/>
       <td th:text="${game.date}"/>
       <td th:text="${game.time}"/>
       <td><button type="submit" th:value="${game.gameId}" name="score">Score Game</button>

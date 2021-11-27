@@ -24,4 +24,16 @@ public class RegistrationQueries extends DBConnectionApp {
             System.out.println(e);
         }
     }
+
+    public void addTeamStats(String teamId) {
+        String query = "INSERT INTO TeamStats (Team_ID, NOM, Goals, Wins, Losses, Draws) VALUES ('"
+                + teamId + "','0','0','0','0','0');";
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
