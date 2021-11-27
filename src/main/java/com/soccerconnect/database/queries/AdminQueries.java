@@ -3,6 +3,7 @@ package com.soccerconnect.database.queries;
 import com.soccerconnect.database.DBConnectionApp;
 import com.soccerconnect.models.PlayerModel;
 import com.soccerconnect.models.TeamModel;
+import com.soccerconnect.models.TeamStatsModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -84,5 +85,30 @@ public class AdminQueries extends DBConnectionApp {
             System.out.println(e);
         }
         return groundIdToName;
+    }
+
+    public void deleteGame(String deleteGameId) {
+        String query = "DELETE FROM games WHERE game_ID='" + deleteGameId + "';";
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void updateTeamStats(TeamStatsModel team1Stats) {
+        String query = "UPDATE TeamStats SET NOM='"+team1Stats.getNom()+"', Goals='"+
+                team1Stats.getGoals()+"', Wins='"+team1Stats.getWins()+"', Losses='"+
+                team1Stats.getLosses()+"', Draws='"+team1Stats.getDraws()+"' WHERE Team_ID='"+
+                team1Stats.getTeamId()+"';";
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }

@@ -4,10 +4,8 @@ import com.soccerconnect.database.queries.AdminQueries;
 import com.soccerconnect.database.queries.GroundQueries;
 import com.soccerconnect.database.queries.GamesQueries;
 
-import com.soccerconnect.models.GameModel;
-import com.soccerconnect.models.PlayerModel;
-import com.soccerconnect.models.TeamModel;
-import com.soccerconnect.models.GroundModel;
+import com.soccerconnect.database.queries.TeamsQueries;
+import com.soccerconnect.models.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 @Controller
@@ -25,6 +22,7 @@ public class AdminController extends MasterController{
     AdminQueries aq = new AdminQueries();
     GroundQueries gq = new GroundQueries();
     GamesQueries gaq = new GamesQueries();
+    TeamsQueries tq = new TeamsQueries();
 
     @GetMapping(value = "/viewAllPlayers")
     public String viewPlayers(Model model)
@@ -104,13 +102,91 @@ public class AdminController extends MasterController{
     @GetMapping(value = "/viewGames")
     public String viewGames(Model model)
     {
-        ArrayList<GameModel> games = gaq.getGames();
-        HashMap<String, String> teamIdToName = aq.getTeamIdToName();
-        HashMap<String, String> groundIdToName = aq.getGroundIdToName();
-        model.addAttribute("teamIdToName", teamIdToName);
-        model.addAttribute("groundIdToName", groundIdToName);
+        ArrayList<GameModel> games = gaq.getGames(aq);
         model.addAttribute("games", games);
         return "viewGames";
+    }
+
+    @RequestMapping(value = "/scoreGame")
+    public String scoreGame(Model model,
+                            @RequestParam(value = "score", defaultValue = "") String scoreGameId,
+                            @RequestParam(value = "delete", defaultValue = "") String deleteGameId)
+    {
+        if (deleteGameId.isEmpty()){
+            GameModel game = gaq.getGameDetails(scoreGameId, aq);
+            ArrayList<PlayerModel> team1Players = tq.getTeamPlayers(game.getTeam1Id());
+            ArrayList<PlayerModel> team2Players = tq.getTeamPlayers(game.getTeam2Id());
+
+            ArrayList<PlayerStatsModel> team1PlayerStats = new ArrayList<>();
+            for(PlayerModel player: team1Players){
+                team1PlayerStats.add(new PlayerStatsModel(player.getUserId(), player.getName()));
+            }
+            ArrayList<PlayerStatsModel> team2PlayerStats = new ArrayList<>();
+            for(PlayerModel player: team2Players){
+                team2PlayerStats.add(new PlayerStatsModel(player.getUserId(), player.getName()));
+            }
+            StatsModel teamStats = new StatsModel(team1PlayerStats, team2PlayerStats);
+            teamStats.setTeam1Id(game.getTeam1Id());
+            teamStats.setTeam2Id(game.getTeam2Id());
+
+            model.addAttribute("game", game);
+            model.addAttribute("teamStats", teamStats);
+            return "scoreGame";
+        }
+        else{
+            aq.deleteGame(deleteGameId);
+            return welcome();
+        }
+    }
+
+    @RequestMapping(value = "/score")
+    public String manageStats(@ModelAttribute StatsModel teamStats)
+    {
+        processTeamStats(teamStats);
+        processTeamPlayerStats(teamStats);
+        return welcome();
+
+    }
+
+    private void processTeamPlayerStats(StatsModel teamStats) {
+        for(PlayerStatsModel playerStat: teamStats.team1PlayersStats){
+            System.out.println("PlayerId: " + playerStat.getPlayerId());
+            System.out.println("Goals: " + playerStat.getGoals());
+            System.out.println("Asst: " + playerStat.getAsst());
+        }
+        for(PlayerStatsModel playerStat: teamStats.team2PlayersStats){
+            System.out.println("PlayerId: " + playerStat.getPlayerId());
+            System.out.println("Goals: " + playerStat.getGoals());
+            System.out.println("Asst: " + playerStat.getAsst());
+        }
+    }
+
+    private void processTeamStats(StatsModel teamStats) {
+        TeamStatsModel team1Stats = tq.getTeamStats(teamStats.getTeam1Id());
+        TeamStatsModel team2Stats = tq.getTeamStats(teamStats.getTeam2Id());
+
+        int team1goals = Integer.parseInt(teamStats.getTeam1Goals());
+        int team2goals = Integer.parseInt(teamStats.getTeam2Goals());
+
+        team1Stats.setNom(String.valueOf(Integer.parseInt(team1Stats.getNom()) + 1));
+        team2Stats.setNom(String.valueOf(Integer.parseInt(team2Stats.getNom()) + 1));
+
+        team1Stats.setGoals(String.valueOf(Integer.parseInt(team1Stats.getGoals()) + team1goals));
+        team2Stats.setGoals(String.valueOf(Integer.parseInt(team2Stats.getGoals()) + team2goals));
+
+        if(team1goals>team2goals){
+            team1Stats.setWins(String.valueOf(Integer.parseInt(team1Stats.getWins()) + 1));
+            team2Stats.setLosses(String.valueOf(Integer.parseInt(team2Stats.getLosses()) + 1));
+        }else if(team2goals>team1goals){
+            team2Stats.setWins(String.valueOf(Integer.parseInt(team2Stats.getWins()) + 1));
+            team1Stats.setLosses(String.valueOf(Integer.parseInt(team1Stats.getLosses()) + 1));
+        }else{
+            team1Stats.setDraws(String.valueOf(Integer.parseInt(team1Stats.getDraws()) + 1));
+            team2Stats.setDraws(String.valueOf(Integer.parseInt(team2Stats.getDraws()) + 1));
+        }
+
+        aq.updateTeamStats(team1Stats);
+        aq.updateTeamStats(team2Stats);
     }
 
 }

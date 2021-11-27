@@ -1,6 +1,5 @@
 package com.soccerconnect.controllers;
 
-import com.soccerconnect.database.DBConnectionApp;
 import com.soccerconnect.database.queries.RolesQueries;
 import org.springframework.stereotype.Controller;
 
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Controller;
 public class MasterController {
 
     public static String currentUserId;
-    DBConnectionApp db = new DBConnectionApp();
     RolesQueries rq = new RolesQueries();
 
     public String welcome() {
