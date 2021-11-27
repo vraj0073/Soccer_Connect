@@ -24,6 +24,7 @@
       <th>Saves</th>
       <th>Yellow Card</th>
       <th>Red Card</th>
+      <th>Man of the match</th>
     </tr>
     <tr th:each="playerStat, itemStat : ${teamStats.team1PlayersStats}">
       <td th:text="${playerStat.getPlayerName()}"></td>
@@ -33,6 +34,7 @@
       <td><input type="number" th:name="|team1PlayersStats[${itemStat.index}].goalsSaved|" min="0"/></td>
       <td><input type="number" th:name="|team1PlayersStats[${itemStat.index}].yellowCards|" min="0"/></td>
       <td><input type="number" th:name="|team1PlayersStats[${itemStat.index}].redCards|" min="0"/></td>
+      <td><input type="number" th:name="|team1PlayersStats[${itemStat.index}].mom|" min="0" max="1"/></td>
     </tr>
   </table>
 
@@ -45,6 +47,7 @@
       <th>Saves</th>
       <th>Yellow Card</th>
       <th>Red Card</th>
+      <th>Man of the match</th>
     </tr>
     <tr th:each="playerStat, itemStat : ${teamStats.team2PlayersStats}">
       <td th:text="${playerStat.getPlayerName()}"></td>
@@ -54,6 +57,7 @@
       <td><input type="number" th:name="|team2PlayersStats[${itemStat.index}].goalsSaved|" min="0"/></td>
       <td><input type="number" th:name="|team2PlayersStats[${itemStat.index}].yellowCards|" min="0"/></td>
       <td><input type="number" th:name="|team2PlayersStats[${itemStat.index}].redCards|" min="0"/></td>
+      <td><input type="number" th:name="|team2PlayersStats[${itemStat.index}].mom|" min="0" max="1"/></td>
     </tr>
   </table>
 

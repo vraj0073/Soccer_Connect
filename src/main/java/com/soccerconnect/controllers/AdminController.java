@@ -143,21 +143,29 @@ public class AdminController extends MasterController{
     public String manageStats(@ModelAttribute StatsModel teamStats)
     {
         processTeamStats(teamStats);
-        processTeamPlayerStats(teamStats);
+        processTeamPlayerStats(teamStats.team1Id, teamStats.team1PlayersStats);
+        processTeamPlayerStats(teamStats.team2Id, teamStats.team2PlayersStats);
         return welcome();
 
     }
 
-    private void processTeamPlayerStats(StatsModel teamStats) {
-        for(PlayerStatsModel playerStat: teamStats.team1PlayersStats){
-            System.out.println("PlayerId: " + playerStat.getPlayerId());
-            System.out.println("Goals: " + playerStat.getGoals());
-            System.out.println("Asst: " + playerStat.getAsst());
-        }
-        for(PlayerStatsModel playerStat: teamStats.team2PlayersStats){
-            System.out.println("PlayerId: " + playerStat.getPlayerId());
-            System.out.println("Goals: " + playerStat.getGoals());
-            System.out.println("Asst: " + playerStat.getAsst());
+    private void processTeamPlayerStats(String teamId, ArrayList<PlayerStatsModel> teamPlayerStats) {
+        for (PlayerStatsModel playerStat : teamPlayerStats) {
+            PlayerStatsModel existingPlayerStat = aq.getPlayerStatsByTeam(playerStat.getPlayerId(), teamId);
+            existingPlayerStat.setNom(String.valueOf(Integer.parseInt(existingPlayerStat.getNom()) + 1));
+            existingPlayerStat.setGoals(String.valueOf(Integer.parseInt(
+                    existingPlayerStat.getGoals()) + Integer.parseInt(playerStat.getGoals())));
+            existingPlayerStat.setAsst(String.valueOf(Integer.parseInt(
+                    existingPlayerStat.getAsst()) + Integer.parseInt(playerStat.getAsst())));
+            existingPlayerStat.setGoalsSaved(String.valueOf(Integer.parseInt(
+                    existingPlayerStat.getGoalsSaved()) + Integer.parseInt(playerStat.getGoalsSaved())));
+            existingPlayerStat.setYellowCards(String.valueOf(Integer.parseInt(
+                    existingPlayerStat.getYellowCards()) + Integer.parseInt(playerStat.getYellowCards())));
+            existingPlayerStat.setRedCards(String.valueOf(Integer.parseInt(
+                    existingPlayerStat.getRedCards()) + Integer.parseInt(playerStat.getRedCards())));
+            existingPlayerStat.setMom(String.valueOf(Integer.parseInt(
+                    existingPlayerStat.getMom()) + Integer.parseInt(playerStat.getMom())));
+            aq.updatePlayerStats(existingPlayerStat, teamId);
         }
     }
 
