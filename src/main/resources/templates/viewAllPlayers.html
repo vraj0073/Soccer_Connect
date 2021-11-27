@@ -8,11 +8,17 @@
 <form th:action="@{/adminDeletePlayer}" method="post">
     <table>
     <tr>
-        <th>Player Name</th>
-        <th>Remove Player</th>
+        <th th:style="${'border: 16px'}" >Player Name</th>
+        <th th:style="${'border: 16px'}">Player Email</th>
+        <th th:style="${'border: 16px'}">Player Mobile</th>
+        <th th:style="${'border: 16px'}">Category</th>
+        <th th:style="${'border: 16px'}">Remove Player</th>
     </tr>
     <tr th:each="player : ${players}">
-        <td th:text="${player.name}"/>
+        <td th:style="${'border: 16px'}" th:text="${player.name}"/>
+        <td th:style="${'border: 16px'}" th:text="${player.email}"/>
+        <td th:style="${'border: 16px'}" th:text="${player.mobile}"/>
+        <td th:style="${'border: 16px'}" th:text="${player.category}"/>
         <td><button type="submit" th:value="${player.userId}" name="player">Delete Player</button></td>
     </tr>
     </table>
