@@ -16,12 +16,13 @@ public class AdminQueries extends DBConnectionApp {
 
     public ArrayList<PlayerModel> getAllPlayers() {
         ArrayList<PlayerModel> players = new ArrayList<>();
-        String query = "SELECT User_ID,Name from users where Role_Id='1';";
+        String query = "SELECT User_ID,Name,email_id,phone_no,gender from users where Role_Id='1';";
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                players.add(new PlayerModel(rs.getString("User_ID"), rs.getString("Name")));
+                players.add(new PlayerModel(rs.getString("User_ID"), rs.getString("Name"),
+                        rs.getString("email_id"),rs.getString("phone_no"),rs.getString("gender")));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -42,13 +43,14 @@ public class AdminQueries extends DBConnectionApp {
 
     public ArrayList<TeamModel> getAllTeams() {
         ArrayList<TeamModel> teams=new ArrayList<>();
-        String query = "SELECT User_ID,Name from users where Role_Id='2';";
+        String query = "SELECT User_ID,Name,email_id,phone_no,gender from users where Role_Id='2';";
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                teams.add(new TeamModel(rs.getString("User_ID"), rs.getString("Name")));
+                teams.add(new TeamModel(rs.getString("User_ID"), rs.getString("Name"),
+                        rs.getString("email_id"),rs.getString("phone_no"),rs.getString("gender")));
             }
         } catch (SQLException e) {
             System.out.println(e);
