@@ -11,9 +11,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class TeamsQueries extends DBConnectionApp {
-    public ArrayList<TeamModel> getTeams(){
+    public ArrayList<TeamModel> getTeams(String playerId){
         ArrayList<TeamModel> teams=new ArrayList<>();
-        String query = "SELECT User_ID,Name from users where Role_Id='2';";
+        String query = "SELECT User_ID,Name from users where Role_Id='2' AND User_ID NOT IN " +
+                "(SELECT From_id from requests where To_id=" + playerId + ");";
+
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);

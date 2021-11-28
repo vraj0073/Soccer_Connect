@@ -26,7 +26,7 @@ public class PlayersController extends UserController{
     @GetMapping(value = "/teams")
     public String viewTeams(Model model)
     {
-        ArrayList<TeamModel> teams = tq.getTeams();
+        ArrayList<TeamModel> teams = tq.getTeams(MasterController.currentUserId);
         model.addAttribute("teams", teams);
         return "viewTeams";
     }
