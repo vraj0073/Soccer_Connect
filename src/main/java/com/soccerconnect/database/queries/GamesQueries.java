@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GamesQueries extends DBConnectionApp {
 
@@ -23,9 +24,11 @@ public class GamesQueries extends DBConnectionApp {
         }
     }
 
-    public ArrayList<GameModel> getGames() {
+    public ArrayList<GameModel> getGames(AdminQueries aq) {
         ArrayList<GameModel> games= new ArrayList<>();
-        String query = "SELECT * from games JOIN Grounds ON ground=Ground_ID;";
+        HashMap<String, String> teamIdToName = aq.getTeamIdToName();
+        HashMap<String, String> groundIdToName = aq.getGroundIdToName();
+        String query = "SELECT * from games;";
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -34,12 +37,37 @@ public class GamesQueries extends DBConnectionApp {
                 games.add(new GameModel(rs.getString("game_ID"),
                         rs.getString("category"), rs.getString("team1"),
                         rs.getString("team2"), rs.getString("ground"),
-                        rs.getString("date"), rs.getString("time")));
+                        rs.getString("date"), rs.getString("time"),
+                        teamIdToName.get(rs.getString("team1")),
+                        teamIdToName.get(rs.getString("team2")),
+                        groundIdToName.get(rs.getString("ground"))));
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
         return games;
+    }
+
+    public GameModel getGameDetails(String scoreGameId, AdminQueries aq) {
+        GameModel game = null;
+        HashMap<String, String> teamIdToName = aq.getTeamIdToName();
+        String query = "SELECT * from games where game_ID='" + scoreGameId + "';";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                game = new GameModel(rs.getString("game_ID"),
+                        rs.getString("category"), rs.getString("team1"),
+                        rs.getString("team2"), rs.getString("ground"),
+                        rs.getString("date"), rs.getString("time"),
+                        teamIdToName.get(rs.getString("team1")),
+                        teamIdToName.get(rs.getString("team2")), null);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return game;
     }
 
 }

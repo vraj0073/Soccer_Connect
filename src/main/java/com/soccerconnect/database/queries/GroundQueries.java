@@ -23,14 +23,15 @@ public class GroundQueries extends DBConnectionApp {
     }
     public ArrayList<GroundModel> getAllGrounds() {
         ArrayList<GroundModel> grounds=new ArrayList<>();
-        String query = "SELECT Ground_ID,Ground_Name from Grounds;";
+        String query = "SELECT Ground_ID,Ground_Name,address,postal_code,contact_no,email from Grounds;";
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                grounds.add(new GroundModel(rs.getString("Ground_ID"),
-                        rs.getString("Ground_Name")));
+                grounds.add(new GroundModel(rs.getString("Ground_ID"), rs.getString("Ground_Name"),
+                        rs.getString("address"),rs.getString("postal_code"),rs.getString("contact_no"),
+                        rs.getString("email")));
             }
         } catch (SQLException e) {
             System.out.println(e);

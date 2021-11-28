@@ -25,6 +25,10 @@ public class RegisterController extends MasterController{
         String password = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         req.registrationQuery(user.getRole(), user.getEmail(), user.getName(),
                 user.getMobile(), password, user.getCategory());
+        if (Integer.parseInt(user.getRole())==2) {
+            String teamId = rq.getUserId(user.getEmail());
+            req.addTeamStats(teamId);
+        }
         return "login";
     }
 }

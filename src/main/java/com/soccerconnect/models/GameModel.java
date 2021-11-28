@@ -9,9 +9,12 @@ public class GameModel {
     String groundId;
     String date;
     String time;
+    String team1Name;
+    String team2Name;
+    String groundName;
 
-    public GameModel(String gameId, String category, String team1Id,
-                     String team2Id, String groundId, String date, String time) {
+    public GameModel(String gameId, String category, String team1Id, String team2Id, String groundId,
+                     String date, String time, String team1Name, String team2Name, String groundName) {
         this.gameId = gameId;
         this.category = category;
         this.team1Id = team1Id;
@@ -19,6 +22,9 @@ public class GameModel {
         this.groundId = groundId;
         this.date = date;
         this.time = time;
+        this.team1Name = team1Name;
+        this.team2Name = team2Name;
+        this.groundName = groundName;
     }
 
     public String getGameId() {
@@ -77,4 +83,27 @@ public class GameModel {
         this.time = time;
     }
 
+    public String getTeam1Name() {
+        return team1Name;
+    }
+
+    public void setTeam1Name(String team1Name) {
+        this.team1Name = team1Name;
+    }
+
+    public String getTeam2Name() {
+        return team2Name;
+    }
+
+    public void setTeam2Name(String team2Name) {
+        this.team2Name = team2Name;
+    }
+
+    public String getGroundName() {
+        return groundName;
+    }
+
+    public void setGroundName(String groundName) {
+        this.groundName = groundName;
+    }
 }

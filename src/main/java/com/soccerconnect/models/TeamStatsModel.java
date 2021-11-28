@@ -10,7 +10,8 @@ public class TeamStatsModel {
     String losses;
     String draws;
 
-    public TeamStatsModel(String teamId, String nom, String goals, String wins, String losses, String draws, String teamName) {
+    public TeamStatsModel(String teamId, String nom, String goals, String wins,
+                          String losses, String draws, String teamName) {
         this.teamId = teamId;
         this.nom = nom;
         this.goals = goals;
