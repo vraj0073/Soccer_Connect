@@ -50,7 +50,6 @@ public class PlayersController extends UserController{
     }
     
     @RequestMapping(value = "/acceptTeamRequest")
-    @ResponseBody
     public String acceptPlayerRequest(@RequestParam(value="acceptReqIdTeam") String TeamId)
     {
         pq.acceptRequest(TeamId, MasterController.currentUserId);

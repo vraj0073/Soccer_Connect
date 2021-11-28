@@ -29,7 +29,6 @@
                 <td><button type="submit" th:value="${request.key}" name="acceptReqIdTeam">Accept</button></td>
              </form>
             <form th:action="@{/rejectTeamRequest}" method="post">
-                <!-- <td th:text="${request.value}"/> -->
                 <td><button type="submit" th:value="${request.key}" name="rejectReqIdTeam">Reject</button></td>
             </form>
         </tr>
