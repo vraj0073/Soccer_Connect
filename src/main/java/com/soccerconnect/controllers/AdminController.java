@@ -3,11 +3,8 @@ package com.soccerconnect.controllers;
 import com.soccerconnect.database.queries.AdminQueries;
 import com.soccerconnect.database.queries.GroundQueries;
 import com.soccerconnect.database.queries.GamesQueries;
-
 import com.soccerconnect.models.*;
 import com.soccerconnect.database.queries.TeamsQueries;
-import com.soccerconnect.models.*;
-import com.soccerconnect.models.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,13 +33,9 @@ public class AdminController extends MasterController{
     }
 
     @RequestMapping(value = "/adminDeletePlayer")
-    public String deletePlayer(@RequestParam(value = "player") String playerId, HttpSession session)
+    public String deletePlayer(@RequestParam(value = "player") String playerId)
     {
-        UserModel user = (UserModel)session.getAttribute("user");
-        if(user !=null){
-            aq.deleteUser(playerId);
-
-        }
+        aq.deleteUser(playerId);
         return welcome();
     }
 

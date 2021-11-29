@@ -23,6 +23,8 @@ public class RegisterController extends MasterController{
     public String registerSubmit(@ModelAttribute UserModel user)
     {
         String password = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        String originalPassword = user.getPassword();
+
         req.registrationQuery(user.getRole(), user.getEmail(), user.getName(),
                 user.getMobile(), password, user.getCategory());
         if (Integer.parseInt(user.getRole())==2) {

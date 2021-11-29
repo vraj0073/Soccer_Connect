@@ -45,11 +45,9 @@ public class LoginController extends MasterController{
     }
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session){
-//        session.invalidate();
-        System.out.println("Logging out");
+
         session.removeAttribute("current_user");
         session.invalidate();
-//        System.out.println(session.getAttribute("current_user"));
         return "login";
     }
     @GetMapping("/info")
