@@ -9,6 +9,8 @@ public class GroundModel {
     String contact;
     String email;
 
+    public GroundModel(){}
+
     public GroundModel(String groundId, String groundName, String address,
                        String postalCode, String contact, String email) {
         this.groundId = groundId;
