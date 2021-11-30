@@ -1,7 +1,8 @@
 stages:
   - build
   - test
-  - deploy
+  - deploy_develop
+  - deploy_production
 build:
     stage: build
     tags:
@@ -22,8 +23,8 @@ test:
         junit:
           - $CI_PROJECT_DIR/target/surefire-reports/TEST-*.xml
           - $CI_PROJECT_DIR/target/failsafe-reports/TEST-*.xml
-deploy:
-  stage: deploy
+deploy_develop:
+  stage: deploy_develop
   tags:
     - dalfcs_gitlab_docker_ci
   image: ruby:latest
