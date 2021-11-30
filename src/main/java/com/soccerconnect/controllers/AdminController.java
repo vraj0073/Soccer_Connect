@@ -3,9 +3,8 @@ package com.soccerconnect.controllers;
 import com.soccerconnect.database.queries.AdminQueries;
 import com.soccerconnect.database.queries.GroundQueries;
 import com.soccerconnect.database.queries.GamesQueries;
-
-import com.soccerconnect.database.queries.TeamsQueries;
 import com.soccerconnect.models.*;
+import com.soccerconnect.database.queries.TeamsQueries;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 
