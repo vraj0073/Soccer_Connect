@@ -54,12 +54,12 @@ public class AdminController extends MasterController{
     }
 
     @GetMapping(value = "/addGround")
-    public String addGround()
+    public String groundForm()
     {
         return "addGround";
     }
 
-    @RequestMapping(value = "/ground")
+    @RequestMapping(value = "/groundSubmission")
     public String addGround(@ModelAttribute GroundModel ground) {
         gq.groundQuery(ground.getGroundName(), ground.getAddress(),
                 ground.getPostalCode(), ground.getContact(), ground.getEmail());
