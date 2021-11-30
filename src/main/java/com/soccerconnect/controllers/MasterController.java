@@ -1,12 +1,8 @@
 package com.soccerconnect.controllers;
 
 import com.soccerconnect.database.queries.RolesQueries;
-import org.apache.catalina.Session;
-import org.apache.catalina.connector.Request;
 import org.springframework.stereotype.Controller;
 
-import javax.security.auth.message.callback.PrivateKeyCallback;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class MasterController {

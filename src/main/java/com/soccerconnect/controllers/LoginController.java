@@ -43,16 +43,11 @@ public class LoginController extends MasterController{
         }
         else return "login";
     }
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session){
-
         session.removeAttribute("current_user");
         session.invalidate();
         return "login";
     }
-    @GetMapping("/info")
-    public String userInfo(HttpSession session) {
-        return "user";
-    }
-
 }
