@@ -2,7 +2,7 @@ package com.soccerconnect.database;
 
 import java.sql.*;
 
-public class DBConnectionApp {
+public abstract class DBConnectionApp {
 
     String HOST = "db-5308.cs.dal.ca";
     String SCHEMA = "CSCI5308_15_TEST";

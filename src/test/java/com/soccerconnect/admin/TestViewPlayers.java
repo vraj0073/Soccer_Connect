@@ -26,11 +26,12 @@ public class TestViewPlayers {
     @BeforeEach
     void setup() {
         aq = new AdminQueries();
+        aq.conn = mock(Connection.class);
     }
 
     @Test
     void TestViewAllPlayers() throws SQLException {
-        aq.conn = mock(Connection.class);
+
         Statement stmt = mock(Statement.class);
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.getString("User_ID")).thenReturn("100");
@@ -57,6 +58,20 @@ public class TestViewPlayers {
             assertEquals(expected_player.getMobile(), actual_player.getMobile());
             assertEquals(expected_player.getCategory(), actual_player.getCategory());
         }
+    }
+
+    @Test
+    void TestViewAllPlayersEmptyData() throws SQLException {
+
+        Statement stmt = mock(Statement.class);
+        ResultSet resultSetMock = mock(ResultSet.class);
+        when(resultSetMock.next()).thenReturn(false);
+        when(aq.conn.createStatement()).thenReturn(stmt);
+        when(stmt.executeQuery(anyString())).thenReturn(resultSetMock);
+
+        ArrayList<PlayerModel> actual_players =  aq.getAllPlayers();
+        assertEquals(0, actual_players.size());
+
     }
 
 }
