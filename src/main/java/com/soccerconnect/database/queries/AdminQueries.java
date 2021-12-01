@@ -1,10 +1,7 @@
 package com.soccerconnect.database.queries;
 
 import com.soccerconnect.database.DBConnectionApp;
-import com.soccerconnect.models.PlayerModel;
-import com.soccerconnect.models.PlayerStatsModel;
-import com.soccerconnect.models.TeamModel;
-import com.soccerconnect.models.TeamStatsModel;
+import com.soccerconnect.models.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -146,5 +143,21 @@ public class AdminQueries extends DBConnectionApp {
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+    public ArrayList<StatsModel> getTeamRanking() {
+        ArrayList<StatsModel> rank =new ArrayList<>();
+        String query = "SELECT Team_ID,NOM,Goals,Wins,Losses,Draws from TeamStats; ";
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                rank.add(new StatsModel(rs.getInt("Team_ID"),rs.getInt("NOM"), rs.getInt("Goals"),
+                        rs.getInt("Wins"),rs.getInt("Losses"),rs.getInt("Draws")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return rank;
     }
 }
