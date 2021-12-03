@@ -196,11 +196,12 @@ public class AdminController extends MasterController{
         aq.updateTeamStats(team1Stats);
         aq.updateTeamStats(team2Stats);
     }
+
     @GetMapping(value = "/teamRanking")
     public String teamRanking(Model model)
     {
-        ArrayList<StatsModel> rank = aq.getTeamRanking();
-        rank.sort(Comparator.comparing(StatsModel::getWins).thenComparing(StatsModel::getDraws).reversed());
+        ArrayList<TeamStatsModel> rank = aq.getTeamRanking();
+        rank.sort(Comparator.comparing(TeamStatsModel::getWins).thenComparing(TeamStatsModel::getDraws).reversed());
         model.addAttribute("rank", rank);
         return "teamRanking";
     }

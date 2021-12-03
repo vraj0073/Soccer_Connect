@@ -144,16 +144,16 @@ public class AdminQueries extends DBConnectionApp {
             System.out.println(e);
         }
     }
-    public ArrayList<StatsModel> getTeamRanking() {
-        ArrayList<StatsModel> rank =new ArrayList<>();
+    public ArrayList<TeamStatsModel> getTeamRanking() {
+        ArrayList<TeamStatsModel> rank =new ArrayList<>();
         String query = "SELECT Team_ID,NOM,Goals,Wins,Losses,Draws from TeamStats; ";
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                rank.add(new StatsModel(rs.getInt("Team_ID"),rs.getInt("NOM"), rs.getInt("Goals"),
-                        rs.getInt("Wins"),rs.getInt("Losses"),rs.getInt("Draws")));
+                rank.add(new TeamStatsModel(rs.getString("Team_ID"),rs.getString("NOM"), rs.getString("Goals"),
+                        rs.getString("Wins"),rs.getString("Losses"),rs.getString("Draws")));
             }
         } catch (SQLException e) {
             System.out.println(e);

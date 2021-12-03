@@ -9,33 +9,10 @@ public class StatsModel {
     public String team2Id;
     String team1Goals;
     String team2Goals;
-    public int NOM;
-    public int Goals;
-    public int Wins;
-    public int Draws;
-    public int Team_ID;
-    public int Losses;
+
     public StatsModel(ArrayList<PlayerStatsModel> team1PlayersStats, ArrayList<PlayerStatsModel> team2PlayersStats) {
         this.team1PlayersStats = team1PlayersStats;
         this.team2PlayersStats = team2PlayersStats;
-    }
-
-    public StatsModel(int Team_ID, int NOM, int Goals, int Wins,int Losses, int Draws) {
-        this.Team_ID = Team_ID;
-        this.NOM = NOM;
-        this.Goals =Goals;
-        this.Wins = Wins;
-        this.Losses = Losses;
-        this.Draws = Draws;
-
-    }
-    public int getWins()
-    {
-        return Wins;
-    }
-    public int getDraws()
-    {
-        return Draws;
     }
 
     public ArrayList<PlayerStatsModel> getTeam1PlayersStats() {
