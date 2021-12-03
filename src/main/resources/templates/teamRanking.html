@@ -18,12 +18,13 @@
 
         </tr>
         <tr th:each="rank : ${rank}">
-            <td th:text="${rank.Team_ID}"/>
-            <td th:text="${rank.NOM}"/>
-            <td th:text="${rank.Goals}"/>
-            <td th:text="${rank.Wins}"/>
-            <td th:text="${rank.Losses}"/>
-            <td th:text="${rank.Draws}"/>
+
+            <td th:text="${rank.teamId}"/>
+            <td th:text="${rank.nom}"/>
+            <td th:text="${rank.goals}"/>
+            <td th:text="${rank.wins}"/>
+            <td th:text="${rank.losses}"/>
+            <td th:text="${rank.draws}"/>
 
 
         </tr>
