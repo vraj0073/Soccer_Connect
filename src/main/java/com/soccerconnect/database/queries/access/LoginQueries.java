@@ -1,12 +1,19 @@
-package com.soccerconnect.database.queries;
+package com.soccerconnect.database.queries.access;
 
-import com.soccerconnect.database.DBConnectionApp;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class LoginQueries extends DBConnectionApp {
+public class LoginQueries implements LoginQueriesInterface {
+
+    public Connection conn;
+
+    public LoginQueries(Connection conn) {
+        this.conn = conn;
+    }
+
     public String getPasswordFromEmail(String email){
         String password = "";
         String query = "SELECT Password from users where Email_ID='" + email + "';";

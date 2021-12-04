@@ -1,15 +1,24 @@
-package com.soccerconnect.database.queries;
+package com.soccerconnect.database.queries.user;
 
-import com.soccerconnect.database.DBConnectionApp;
-import com.soccerconnect.models.*;
+import com.soccerconnect.models.stats.PlayerStatsModel;
+import com.soccerconnect.models.user.PlayerModel;
+import com.soccerconnect.models.user.TeamModel;
+import com.soccerconnect.models.stats.TeamStatsModel;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AdminQueries extends DBConnectionApp {
+public class AdminQueries implements AdminQueriesInterface {
+
+    public Connection conn;
+
+    public AdminQueries(Connection conn) {
+        this.conn = conn;
+    }
 
     public ArrayList<PlayerModel> getAllPlayers() {
         ArrayList<PlayerModel> players = new ArrayList<>();

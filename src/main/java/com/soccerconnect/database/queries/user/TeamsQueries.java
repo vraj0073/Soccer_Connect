@@ -1,16 +1,23 @@
-package com.soccerconnect.database.queries;
+package com.soccerconnect.database.queries.user;
 
-import com.soccerconnect.database.DBConnectionApp;
-import com.soccerconnect.models.PlayerModel;
-import com.soccerconnect.models.TeamStatsModel;
-import com.soccerconnect.models.TeamModel;
+import com.soccerconnect.models.user.PlayerModel;
+import com.soccerconnect.models.stats.TeamStatsModel;
+import com.soccerconnect.models.user.TeamModel;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class TeamsQueries extends DBConnectionApp {
+public class TeamsQueries implements TeamsQueriesInterface {
+
+    Connection conn;
+
+    public TeamsQueries(Connection conn) {
+        this.conn = conn;
+    }
+
     public ArrayList<TeamModel> getTeams(String playerId){
         ArrayList<TeamModel> teams=new ArrayList<>();
         String query = "SELECT User_ID,Name from users where Role_Id='2' AND User_ID NOT IN " +

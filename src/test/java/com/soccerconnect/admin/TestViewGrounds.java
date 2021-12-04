@@ -1,7 +1,7 @@
 package com.soccerconnect.admin;
 
-import com.soccerconnect.database.queries.GroundQueries;
-import com.soccerconnect.models.GroundModel;
+import com.soccerconnect.database.queries.ground.GroundQueries;
+import com.soccerconnect.models.ground.GroundModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +22,7 @@ public class TestViewGrounds {
 
     @BeforeEach
     void setup() {
-        gq = new GroundQueries();
-        gq.conn = mock(Connection.class);
+        gq = new GroundQueries(mock(Connection.class));
     }
 
     @Test

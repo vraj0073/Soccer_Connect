@@ -1,11 +1,17 @@
-package com.soccerconnect.database.queries;
+package com.soccerconnect.database.queries.access;
 
-import com.soccerconnect.database.DBConnectionApp;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class RegistrationQueries extends DBConnectionApp {
+public class RegistrationQueries implements RegistrationQueriesInterface {
+
+    public Connection conn;
+
+    public RegistrationQueries(Connection conn) {
+        this.conn = conn;
+    }
 
     public void registrationQuery(String role,
                                   String email,

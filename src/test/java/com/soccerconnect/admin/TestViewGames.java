@@ -1,8 +1,8 @@
 package com.soccerconnect.admin;
 
-import com.soccerconnect.database.queries.AdminQueries;
-import com.soccerconnect.database.queries.GamesQueries;
-import com.soccerconnect.models.GameModel;
+import com.soccerconnect.database.queries.user.AdminQueries;
+import com.soccerconnect.database.queries.game.GamesQueries;
+import com.soccerconnect.models.game.GameModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,8 +25,7 @@ public class TestViewGames {
 
     @BeforeEach
     void setup() {
-        gq = new GamesQueries();
-        gq.conn = mock(Connection.class);
+        gq = new GamesQueries(mock(Connection.class));
         aq = mock(AdminQueries.class);
     }
 

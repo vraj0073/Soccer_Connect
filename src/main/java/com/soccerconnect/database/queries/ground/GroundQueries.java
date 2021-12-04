@@ -1,16 +1,22 @@
-package com.soccerconnect.database.queries;
+package com.soccerconnect.database.queries.ground;
 
-import com.soccerconnect.database.DBConnectionApp;
-import com.soccerconnect.models.GroundModel;
+import com.soccerconnect.models.ground.GroundModel;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class GroundQueries extends DBConnectionApp {
+public class GroundQueries implements GroundsQueriesInterface {
 
-    public void groundQuery(String groundName,  String address, String postalCode, String phone, String email) {
+    public Connection conn;
+
+    public GroundQueries(Connection conn) {
+        this.conn = conn;
+    }
+
+    public void groundQuery(String groundName, String address, String postalCode, String phone, String email) {
         String query = "INSERT INTO Grounds(Ground_Name, Address, Postal_Code, Contact_No, Email) " + "VALUES ('"
                 + groundName + "','" + address + "','" + postalCode + "','" + phone + "','" + email + "');";
         try {
