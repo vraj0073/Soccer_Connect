@@ -40,8 +40,6 @@ public class TestTeamStats {
         when(teamsQueries.conn.createStatement()).thenReturn(stmt);
         when(stmt.executeQuery(anyString())).thenReturn(resultSetMock);
 
-        ArrayList<PlayerModel> expectedPlayers = new ArrayList<>();
-        expectedPlayers.add(new PlayerModel("58","Player1"));
         TeamStatsModel teamStats = teamsQueries.getTeamStats("5");
 
         assertEquals(teamStats.getNom(),resultSetMock.getString("NOM"));
