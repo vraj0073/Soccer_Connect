@@ -21,15 +21,6 @@ public class TeamStatsModel {
         this.teamName = teamName;
     }
 
-    public TeamStatsModel(String team_Id, String nom, String goals, String wins, String losses, String draws) {
-        this.teamId = team_Id;
-        this.nom = nom;
-        this.goals = goals;
-        this.wins = wins;
-        this.losses = losses;
-        this.draws = draws;
-    }
-
     public String getTeamId() {
         return teamId;
     }

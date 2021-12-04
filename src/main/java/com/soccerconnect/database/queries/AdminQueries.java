@@ -146,14 +146,17 @@ public class AdminQueries extends DBConnectionApp {
     }
     public ArrayList<TeamStatsModel> getTeamRanking() {
         ArrayList<TeamStatsModel> rank =new ArrayList<>();
+        HashMap<String, String> teamIDtoName = getTeamIdToName();
         String query = "SELECT Team_ID,NOM,Goals,Wins,Losses,Draws from TeamStats; ";
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                rank.add(new TeamStatsModel(rs.getString("Team_ID"),rs.getString("NOM"), rs.getString("Goals"),
-                        rs.getString("Wins"),rs.getString("Losses"),rs.getString("Draws")));
+                rank.add(new TeamStatsModel(rs.getString("Team_ID"),rs.getString("NOM"),
+                        rs.getString("Goals"), rs.getString("Wins"),
+                        rs.getString("Losses"),rs.getString("Draws"),
+                        teamIDtoName.get(rs.getString("Team_ID"))));
             }
         } catch (SQLException e) {
             System.out.println(e);
