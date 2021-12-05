@@ -24,49 +24,46 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 
 @Controller
-public class AdminController extends MasterController{
+public class AdminController extends MasterController {
 
     AdminQueriesInterface aq = new AdminQueries(conn);
     GroundsQueriesInterface gq = new GroundQueries(conn);
     GamesQueriesInterface gaq = new GamesQueries(conn);
     TeamsQueriesInterface tq = new TeamsQueries(conn);
 
+
     @GetMapping(value = "/viewAllPlayers")
-    public String viewPlayers(Model model)
-    {
+    public String viewPlayers(Model model) {
         ArrayList<PlayerModel> players = aq.getAllPlayers();
         model.addAttribute("players", players);
         return "viewAllPlayers";
     }
 
     @RequestMapping(value = "/adminDeletePlayer")
-    public String deletePlayer(@RequestParam(value = "player") String playerId)
-    {
+    public String deletePlayer(@RequestParam(value = "player") String playerId) {
         aq.deleteUser(playerId);
         return welcome();
     }
 
     @GetMapping(value = "/viewAllTeams")
-    public String viewTeams(Model model)
-    {
+    public String viewTeams(Model model) {
         ArrayList<TeamModel> teams = aq.getAllTeams();
         model.addAttribute("teams", teams);
         return "viewAllTeams";
     }
 
     @RequestMapping(value = "/adminDeleteTeam")
-    public String deleteTeam(@RequestParam(value = "team") String teamId)
-    {
+    public String deleteTeam(@RequestParam(value = "team") String teamId) {
         aq.deleteUser(teamId);
         return welcome();
     }
 
     @GetMapping(value = "/addGround")
-    public String groundForm()
-    {
+    public String groundForm() {
         return "addGround";
     }
 
@@ -78,23 +75,20 @@ public class AdminController extends MasterController{
     }
 
     @GetMapping(value = "/viewAllGrounds")
-    public String viewGrounds(Model model)
-    {
+    public String viewGrounds(Model model) {
         ArrayList<GroundModel> grounds = gq.getAllGrounds();
         model.addAttribute("grounds", grounds);
         return "viewAllGrounds";
     }
 
     @RequestMapping(value = "/adminDeleteGround")
-    public String deleteGround(@RequestParam(value = "ground") String groundId)
-    {
+    public String deleteGround(@RequestParam(value = "ground") String groundId) {
         gq.deleteGround(groundId);
         return welcome();
     }
 
     @GetMapping(value = "/organizeGame")
-    public String organizeGame(Model model)
-    {
+    public String organizeGame(Model model) {
         ArrayList<TeamModel> teams = aq.getAllTeams();
         ArrayList<GroundModel> grounds = gq.getAllGrounds();
         model.addAttribute("teams", teams);
@@ -110,8 +104,7 @@ public class AdminController extends MasterController{
     }
 
     @GetMapping(value = "/viewGames")
-    public String viewGames(Model model)
-    {
+    public String viewGames(Model model) {
         ArrayList<GameModel> games = gaq.getGames(aq);
         model.addAttribute("games", games);
         return "viewGames";
@@ -120,19 +113,18 @@ public class AdminController extends MasterController{
     @RequestMapping(value = "/scoreGame")
     public String scoreGame(Model model,
                             @RequestParam(value = "score", defaultValue = "") String scoreGameId,
-                            @RequestParam(value = "delete", defaultValue = "") String deleteGameId)
-    {
-        if (deleteGameId.isEmpty()){
+                            @RequestParam(value = "delete", defaultValue = "") String deleteGameId) {
+        if (deleteGameId.isEmpty()) {
             GameModel game = gaq.getGameDetails(scoreGameId, aq);
             ArrayList<PlayerModel> team1Players = tq.getTeamPlayers(game.getTeam1Id());
             ArrayList<PlayerModel> team2Players = tq.getTeamPlayers(game.getTeam2Id());
 
             ArrayList<PlayerStatsModel> team1PlayerStats = new ArrayList<>();
-            for(PlayerModel player: team1Players){
+            for (PlayerModel player : team1Players) {
                 team1PlayerStats.add(new PlayerStatsModel(player.getUserId(), player.getName()));
             }
             ArrayList<PlayerStatsModel> team2PlayerStats = new ArrayList<>();
-            for(PlayerModel player: team2Players){
+            for (PlayerModel player : team2Players) {
                 team2PlayerStats.add(new PlayerStatsModel(player.getUserId(), player.getName()));
             }
             StatsModel teamStats = new StatsModel(team1PlayerStats, team2PlayerStats);
@@ -142,22 +134,100 @@ public class AdminController extends MasterController{
             model.addAttribute("game", game);
             model.addAttribute("teamStats", teamStats);
             return "scoreGame";
-        }
-        else{
+        } else {
             aq.deleteGame(deleteGameId);
             return welcome();
         }
     }
 
     @RequestMapping(value = "/score")
-    public String manageStats(@ModelAttribute StatsModel teamStats)
-    {
-        processTeamStats(teamStats);
-        processTeamPlayerStats(teamStats.team1Id, teamStats.team1PlayersStats);
-        processTeamPlayerStats(teamStats.team2Id, teamStats.team2PlayersStats);
-        return welcome();
+    public String manageStats(@ModelAttribute StatsModel teamStats, Model model) {
+        int team1Goal = 0;
+        int team2Goal = 0;
+        String errorMsg = "";
+        String validationString = "";
+        String validationScoreString = "";
+        List<Integer> totalGoalScoredTeam1 = new ArrayList<Integer>();
+        List<Integer> totalGoalScoredTeam2 = new ArrayList<Integer>();
+        validationString = validationMOM(teamStats,model);
+        if (validationString == "1"){
+
+            for (PlayerStatsModel playerStat : teamStats.getTeam1PlayersStats()) {
+
+                totalGoalScoredTeam1.add(Integer.parseInt(playerStat.getGoals()));
+            }
+            for (PlayerStatsModel playerStat : teamStats.getTeam2PlayersStats()) {
+                totalGoalScoredTeam2.add(Integer.parseInt(playerStat.getGoals()));
+            }
+        }
+        else {
+            errorMsg = "Duplicate Man of the match";
+            model.addAttribute("errorMsg", errorMsg);
+            return "errorScoreGame";
+        }
+        for (int i = 0; i < totalGoalScoredTeam1.size(); i++) {
+            team1Goal = team1Goal + totalGoalScoredTeam1.get(i);
+        }
+        for (int i = 0; i < totalGoalScoredTeam2.size(); i++) {
+            team2Goal = team2Goal + totalGoalScoredTeam2.get(i);
+        }
+        validationScoreString = validationScore(teamStats,team1Goal,team2Goal);
+        if (validationScoreString == "errorScoreGame"){
+            errorMsg = "Error in Score";
+            model.addAttribute("errorMsg", errorMsg);
+            return "errorScoreGame";
+        }
+        else {
+            ArrayList<Integer> teamGoal = new ArrayList<>();
+            teamGoal.add(Integer.parseInt(teamStats.getTeam1Goals()));
+            teamGoal.add(Integer.parseInt(teamStats.getTeam2Goals()));
+            model.addAttribute("teamGoal", teamGoal);
+            return "teamScoreBoard";
+        }
+    }
+
+    public String validationScore(@ModelAttribute StatsModel teamStats,Integer team1Goal, Integer team2Goal){
+        if(Integer.parseInt(teamStats.getTeam1Goals()) >= team1Goal && Integer.parseInt(teamStats.getTeam2Goals()) >= team2Goal ) {
+
+            return "True";
+        }else {
+            return "errorScoreGame";
+        }
 
     }
+    public String validationMOM(@ModelAttribute StatsModel teamStats, Model model){
+        String momFlag = "0";
+        String errorMsg = "";
+        for (PlayerStatsModel playerStat : teamStats.getTeam1PlayersStats()) {
+            if(playerStat.getMom().equals("1") && !momFlag.equals("1") ){
+                momFlag = "1";
+            }
+            else if(playerStat.getMom().equals("1") && momFlag.equals("1")){
+                errorMsg = "Duplicate Man of the match";
+                model.addAttribute("errorMsg", errorMsg);
+                return "errorScoreGame";
+            }
+            else{
+                continue;
+            }
+        }
+        for (PlayerStatsModel playerStat : teamStats.getTeam2PlayersStats()) {
+            if(playerStat.getMom().equals("1") && !momFlag.equals("1") ){
+                momFlag = "1";
+            }
+            else if(playerStat.getMom().equals("1") && momFlag.equals("1")){
+                errorMsg = "Duplicate Man of the match";
+                model.addAttribute("errorMsg", errorMsg);
+                return "errorScoreGame";
+            }
+            else{
+                continue;
+            }
+        }
+
+        return momFlag;
+    }
+
 
     private void processTeamPlayerStats(String teamId, ArrayList<PlayerStatsModel> teamPlayerStats) {
         for (PlayerStatsModel playerStat : teamPlayerStats) {
@@ -202,7 +272,6 @@ public class AdminController extends MasterController{
             team1Stats.setDraws(String.valueOf(Integer.parseInt(team1Stats.getDraws()) + 1));
             team2Stats.setDraws(String.valueOf(Integer.parseInt(team2Stats.getDraws()) + 1));
         }
-
         aq.updateTeamStats(team1Stats);
         aq.updateTeamStats(team2Stats);
     }
@@ -214,6 +283,11 @@ public class AdminController extends MasterController{
         rank.sort(Comparator.comparing(TeamStatsModel::getWins).thenComparing(TeamStatsModel::getDraws).reversed());
         model.addAttribute("rank", rank);
         return "teamRanking";
+    }
+    @GetMapping(value = "/errorScoreGame")
+    public String errorScoreGame()
+    {
+        return "welcomeAdmin";
     }
 
 }
