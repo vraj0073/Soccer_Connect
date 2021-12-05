@@ -1,26 +1,47 @@
 package com.soccerconnect.database;
 
-import com.soccerconnect.utils.ConfigReader;
-import java.io.IOException;
+import com.soccerconnect.utils.ConfigReaderInterface;
+
 import java.sql.*;
-import java.util.HashMap;
 
 public class DBConnectionApp {
+
+    String HOST;
+    String SCHEMA;
+    String USER;
+    String PASSWORD;
+    String URL;
     
     public Connection conn;
+    ConfigReaderInterface configReader;
 
-    public DBConnectionApp() {
+    public DBConnectionApp(ConfigReaderInterface configReader) {
         try {
-            ConfigReader properties = new ConfigReader();
-            HashMap<String,String> configuration = properties.getPropValues();
-            String HOST = configuration.get("HOST");
-            String SCHEMA = configuration.get("SCHEMA");
-            String USER = configuration.get("USER");
-            String PASSWORD = configuration.get("PASSWORD");
-            String URL = "jdbc:mysql://" + HOST + ":3306/" + SCHEMA;
-            conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException | IOException e) {
+            this.configReader = configReader;
+            HOST = configReader.getConfigValue("HOST");
+            SCHEMA = configReader.getConfigValue("SCHEMA");
+            USER = configReader.getConfigValue("USER");
+            PASSWORD = configReader.getConfigValue("PASSWORD");
+            URL = "jdbc:mysql://" + HOST + ":3306/" + SCHEMA;
+        } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    public Connection getConnection(){
+        try {
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
+
+    public void closeConnection(){
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

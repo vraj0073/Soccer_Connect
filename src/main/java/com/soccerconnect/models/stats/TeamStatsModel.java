@@ -1,4 +1,4 @@
-package com.soccerconnect.models;
+package com.soccerconnect.models.stats;
 
 public class TeamStatsModel {
 

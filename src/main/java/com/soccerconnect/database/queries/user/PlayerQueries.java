@@ -1,17 +1,23 @@
-package com.soccerconnect.database.queries;
+package com.soccerconnect.database.queries.user;
 
-import com.soccerconnect.database.DBConnectionApp;
-import com.soccerconnect.models.PlayerStatsModel;
-import com.soccerconnect.models.PlayerModel;
-import com.soccerconnect.models.TeamStatsModel;
-import com.soccerconnect.models.TeamModel;
+import com.soccerconnect.models.stats.PlayerStatsModel;
+import com.soccerconnect.models.user.PlayerModel;
+import com.soccerconnect.models.stats.TeamStatsModel;
+import com.soccerconnect.models.user.TeamModel;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class PlayerQueries extends DBConnectionApp {
+public class PlayerQueries implements PlayerQueriesInterface {
+
+    Connection conn;
+
+    public PlayerQueries(Connection conn) {
+        this.conn = conn;
+    }
 
     public PlayerStatsModel getPlayerStats(String playerId){
 

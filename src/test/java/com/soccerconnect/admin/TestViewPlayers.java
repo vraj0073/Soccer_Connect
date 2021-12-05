@@ -5,8 +5,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.soccerconnect.database.queries.AdminQueries;
-import com.soccerconnect.models.PlayerModel;
+import com.soccerconnect.database.queries.user.AdminQueries;
+import com.soccerconnect.models.user.PlayerModel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,8 +25,7 @@ public class TestViewPlayers {
 
     @BeforeEach
     void setup() {
-        aq = new AdminQueries();
-        aq.conn = mock(Connection.class);
+        aq = new AdminQueries(mock(Connection.class));
     }
 
     @Test

@@ -1,12 +1,19 @@
-package com.soccerconnect.database.queries;
+package com.soccerconnect.database.queries.access;
 
-import com.soccerconnect.database.DBConnectionApp;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class RolesQueries extends DBConnectionApp {
+public class RolesQueries implements RolesQueriesInterface {
+
+    public Connection conn;
+
+    public RolesQueries(Connection conn) {
+        this.conn = conn;
+    }
+
     public int getRoleFromEmail(String email){
         int roleID = -1;
         String query = "SELECT Role_ID from users where Email_ID='" + email + "';";

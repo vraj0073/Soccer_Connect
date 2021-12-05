@@ -1,7 +1,7 @@
 package com.soccerconnect.admin;
 
-import com.soccerconnect.database.queries.AdminQueries;
-import com.soccerconnect.models.TeamModel;
+import com.soccerconnect.database.queries.user.AdminQueries;
+import com.soccerconnect.models.user.TeamModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,8 +23,7 @@ public class TestViewTeams {
 
     @BeforeEach
     void setup() {
-        aq = new AdminQueries();
-        aq.conn = mock(Connection.class);
+        aq = new AdminQueries(mock(Connection.class));
     }
 
     @Test
