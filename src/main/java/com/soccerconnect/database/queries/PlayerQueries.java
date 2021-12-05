@@ -4,6 +4,9 @@ import com.soccerconnect.database.DBConnectionApp;
 import com.soccerconnect.models.PlayerStatsModel;
 import com.soccerconnect.models.PlayerModel;
 import com.soccerconnect.models.TeamStatsModel;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 import com.soccerconnect.models.TeamModel;
 
 import java.sql.ResultSet;
@@ -15,7 +18,7 @@ public class PlayerQueries extends DBConnectionApp {
 
     public PlayerStatsModel getPlayerStats(String playerId){
 
-        PlayerStatsModel playerStats=null;
+        PlayerStatsModel playerStats =null;
         String query = "SELECT sum(NOM) as totalNOM, sum(goals) as totalGoals,sum(assists) as totalAssists,sum(goals_saved) as totalGoalsSaved," +
                 "sum(yellow_Card) as totalYellowCard,sum(red_card) as totalRedCard,sum(MOM) as totalMOM" +
                 " from PlayerStats where player_id ="+playerId +";";
