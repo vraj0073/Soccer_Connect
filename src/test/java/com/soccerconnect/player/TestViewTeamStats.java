@@ -5,18 +5,14 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.soccerconnect.database.queries.AdminQueries;
 import com.soccerconnect.database.queries.PlayerQueries;
-import com.soccerconnect.models.PlayerModel;
 import com.soccerconnect.models.TeamStatsModel;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
