@@ -1,15 +1,22 @@
-package com.soccerconnect.database.queries;
+package com.soccerconnect.database.queries.game;
 
-import com.soccerconnect.database.DBConnectionApp;
-import com.soccerconnect.models.GameModel;
+import com.soccerconnect.database.queries.user.AdminQueriesInterface;
+import com.soccerconnect.models.game.GameModel;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GamesQueries extends DBConnectionApp {
+public class GamesQueries implements GamesQueriesInterface {
+
+    public Connection conn;
+
+    public GamesQueries(Connection conn) {
+        this.conn = conn;
+    }
 
     public void organize(String category, String team1, String team2, String ground, String date, String  time) {
         String query = "INSERT INTO games(category,team1,team2,ground,date,time) " + "VALUES ('" + category
@@ -24,7 +31,7 @@ public class GamesQueries extends DBConnectionApp {
         }
     }
 
-    public ArrayList<GameModel> getGames(AdminQueries aq) {
+    public ArrayList<GameModel> getGames(AdminQueriesInterface aq) {
         ArrayList<GameModel> games= new ArrayList<>();
         HashMap<String, String> teamIdToName = aq.getTeamIdToName();
         HashMap<String, String> groundIdToName = aq.getGroundIdToName();
@@ -48,7 +55,7 @@ public class GamesQueries extends DBConnectionApp {
         return games;
     }
 
-    public GameModel getGameDetails(String scoreGameId, AdminQueries aq) {
+    public GameModel getGameDetails(String scoreGameId, AdminQueriesInterface aq) {
         GameModel game = null;
         HashMap<String, String> teamIdToName = aq.getTeamIdToName();
         String query = "SELECT * from games where game_ID='" + scoreGameId + "';";

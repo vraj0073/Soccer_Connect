@@ -1,7 +1,8 @@
 package com.soccerconnect.controllers;
 
-import com.soccerconnect.database.queries.LoginQueries;
-import com.soccerconnect.models.UserModel;
+import com.soccerconnect.database.queries.access.LoginQueries;
+import com.soccerconnect.database.queries.access.LoginQueriesInterface;
+import com.soccerconnect.models.user.UserModel;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginController extends MasterController{
 
-    LoginQueries lq = new LoginQueries();
+    LoginQueriesInterface lq = new LoginQueries(conn);
 
     @GetMapping(value = "/")
     public String index()

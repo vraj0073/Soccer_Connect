@@ -1,38 +1,32 @@
 package com.soccerconnect.utils;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Properties;
 
-public class ConfigReader {
-    InputStream inputStream;
-    HashMap<String,String> configuration=new HashMap<String,String>();
+public class ConfigReader implements ConfigReaderInterface {
 
-    public HashMap<String,String> getPropValues() throws IOException {
+    Properties properties = new Properties();
 
+    public ConfigReader(String propFileName) {
         try {
-            Properties prop = new Properties();
-            String propFileName = "application.properties";
-
-            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
-
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
             if (inputStream != null) {
-                prop.load(inputStream);
+                properties.load(inputStream);
             } else {
                 throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
             }
-            configuration.put("HOST",prop.getProperty("HOST"));
-            configuration.put("SCHEMA",prop.getProperty("SCHEMA"));
-            configuration.put("USER",prop.getProperty("USER"));
-            configuration.put("PASSWORD",prop.getProperty("PASSWORD"));
-
+            inputStream.close();
         } catch (Exception e) {
             System.out.println("Exception: " + e);
-        } finally {
-            inputStream.close();
         }
-        return configuration;
+    }
+
+    public String getConfigValue(String config) throws Exception {
+        if (properties.getProperty(config) != null) {
+            return properties.getProperty(config);
+        } else {
+            throw new Exception("Config " + config + " does not exist!");
+        }
     }
 }

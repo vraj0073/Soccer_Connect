@@ -1,4 +1,4 @@
-package com.soccerconnect.models;
+package com.soccerconnect.models.ground;
 
 public class GroundModel {
 

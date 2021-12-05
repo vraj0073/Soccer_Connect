@@ -1,7 +1,8 @@
 package com.soccerconnect.controllers;
 
-import com.soccerconnect.database.queries.RegistrationQueries;
-import com.soccerconnect.models.UserModel;
+import com.soccerconnect.database.queries.access.RegistrationQueries;
+import com.soccerconnect.database.queries.access.RegistrationQueriesInterface;
+import com.soccerconnect.models.user.UserModel;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class RegisterController extends MasterController{
 
-    RegistrationQueries req = new RegistrationQueries();
+    RegistrationQueriesInterface req = new RegistrationQueries(conn);
 
     @GetMapping(value = "/register")
     public String registerForm()

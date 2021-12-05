@@ -1,7 +1,7 @@
 package com.soccerconnect.controllers;
 
-import com.soccerconnect.models.PlayerModel;
-import com.soccerconnect.models.TeamStatsModel;
+import com.soccerconnect.models.user.PlayerModel;
+import com.soccerconnect.models.stats.TeamStatsModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

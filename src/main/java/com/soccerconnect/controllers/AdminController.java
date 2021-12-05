@@ -1,10 +1,20 @@
 package com.soccerconnect.controllers;
 
-import com.soccerconnect.database.queries.AdminQueries;
-import com.soccerconnect.database.queries.GroundQueries;
-import com.soccerconnect.database.queries.GamesQueries;
-import com.soccerconnect.models.*;
-import com.soccerconnect.database.queries.TeamsQueries;
+import com.soccerconnect.database.queries.game.GamesQueriesInterface;
+import com.soccerconnect.database.queries.ground.GroundsQueriesInterface;
+import com.soccerconnect.database.queries.user.AdminQueries;
+import com.soccerconnect.database.queries.ground.GroundQueries;
+import com.soccerconnect.database.queries.game.GamesQueries;
+import com.soccerconnect.database.queries.user.AdminQueriesInterface;
+import com.soccerconnect.database.queries.user.TeamsQueries;
+import com.soccerconnect.database.queries.user.TeamsQueriesInterface;
+import com.soccerconnect.models.game.GameModel;
+import com.soccerconnect.models.ground.GroundModel;
+import com.soccerconnect.models.stats.PlayerStatsModel;
+import com.soccerconnect.models.stats.StatsModel;
+import com.soccerconnect.models.user.PlayerModel;
+import com.soccerconnect.models.user.TeamModel;
+import com.soccerconnect.models.stats.TeamStatsModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +29,10 @@ import java.util.Comparator;
 @Controller
 public class AdminController extends MasterController{
 
-    AdminQueries aq = new AdminQueries();
-    GroundQueries gq = new GroundQueries();
-    GamesQueries gaq = new GamesQueries();
-    TeamsQueries tq = new TeamsQueries();
+    AdminQueriesInterface aq = new AdminQueries(conn);
+    GroundsQueriesInterface gq = new GroundQueries(conn);
+    GamesQueriesInterface gaq = new GamesQueries(conn);
+    TeamsQueriesInterface tq = new TeamsQueries(conn);
 
     @GetMapping(value = "/viewAllPlayers")
     public String viewPlayers(Model model)
