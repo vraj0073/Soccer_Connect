@@ -50,30 +50,4 @@ public class TestViewTeams {
     }
    }
 
-//    @Test
-//     void TestViewTeamsNegative() throws Exception{
-//         pq.conn = mock(Connection.class);
-//         Statement stmt = mock(Statement.class);
-//         ResultSet resultSetMock = mock(ResultSet.class);
-//         when(resultSetMock.getString("User_ID")).thenReturn("1");
-//         when(resultSetMock.getString("Name")).thenReturn("Meet");
-//         when(resultSetMock.next()).thenReturn(true).thenReturn(false);
-//         when(pq.conn.createStatement()).thenReturn(stmt);
-//         when(stmt.executeQuery(anyString())).thenReturn(resultSetMock);
-
-//         ArrayList<TeamModel> expected_teams = new ArrayList<>();
-//         expected_teams.add(new TeamModel("1", "Meet"));
-//         expected_teams.add(new TeamModel("2", "Harsh"));
-//         ArrayList<TeamModel> actual_teams = pq.getTeams("1");
-
-//         assertNotEquals(expected_teams.size(), actual_teams.size());
-
-//         for(int i = 0; i < expected_teams.size() ; i++ ){
-//             TeamModel expected_team = expected_teams.get(i);
-//             TeamModel actual_team = actual_teams.get(i);
-//             assertEquals(expected_team.getUserId(), actual_team.getUserId());
-//             assertEquals(expected_team.getName(), actual_team.getName());
-//         }
-//    }
-
 }

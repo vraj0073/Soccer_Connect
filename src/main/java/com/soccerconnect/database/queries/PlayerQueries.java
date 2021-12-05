@@ -4,7 +4,6 @@ import com.soccerconnect.database.DBConnectionApp;
 import com.soccerconnect.models.PlayerStatsModel;
 import com.soccerconnect.models.PlayerModel;
 import com.soccerconnect.models.TeamStatsModel;
-
 import com.soccerconnect.models.TeamModel;
 
 import java.sql.ResultSet;
