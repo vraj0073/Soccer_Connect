@@ -20,9 +20,7 @@ public class TestTeamStats {
     TeamsQueries teamsQueries;
     @BeforeEach
     void setup() {
-
         teamsQueries = new TeamsQueries(mock(Connection.class));
-//        teamsQueries.conn = mock(Connection.class);
     }
 
     @Test

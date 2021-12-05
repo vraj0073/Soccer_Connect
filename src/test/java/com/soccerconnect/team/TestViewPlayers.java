@@ -21,11 +21,9 @@ import static org.mockito.Mockito.when;
 public class TestViewPlayers {
 
     TeamsQueries teamsQueries;
-    GamesQueries gq;
     @BeforeEach
     void setup() {
         teamsQueries = new TeamsQueries(mock(Connection.class));
-        gq = new GamesQueries(mock(Connection.class));
 
     }
     String teamId = "2";
