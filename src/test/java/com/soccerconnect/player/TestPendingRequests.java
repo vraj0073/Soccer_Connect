@@ -5,8 +5,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.soccerconnect.database.queries.RequestsQueries;
 
+
+import com.soccerconnect.database.queries.user.RequestsQueries;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +25,7 @@ public class TestPendingRequests{
 
     @BeforeEach
     void setup(){
-        requestQueries = new RequestsQueries();
+        requestQueries = new RequestsQueries(mock(Connection.class));
     }
 
     @Test

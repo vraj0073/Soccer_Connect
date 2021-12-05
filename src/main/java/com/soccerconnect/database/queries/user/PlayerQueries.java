@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class PlayerQueries implements PlayerQueriesInterface {
 
-    Connection conn;
+    public Connection conn;
 
     public PlayerQueries(Connection conn) {
         this.conn = conn;

@@ -5,9 +5,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.soccerconnect.database.queries.PlayerQueries;
-import com.soccerconnect.models.PlayerStatsModel;
 
+import com.soccerconnect.database.queries.user.PlayerQueries;
+import com.soccerconnect.models.stats.PlayerStatsModel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +24,7 @@ public class TestViewPlayerStats{
 
     @BeforeEach
     void setup(){
-        playerq = new PlayerQueries();
+        playerq = new PlayerQueries(mock(Connection.class));
     }
 
     @Test
