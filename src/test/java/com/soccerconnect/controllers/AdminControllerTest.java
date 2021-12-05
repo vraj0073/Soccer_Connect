@@ -10,11 +10,4 @@ import static org.junit.jupiter.api.Assertions.*;
 class AdminControllerTest {
 
 
-    @Test
-    void validationScore() {
-    }
-
-    @Test
-    void validationMOM() {
-    }
 }
