@@ -21,7 +21,7 @@ public class PlayerQueries implements PlayerQueriesInterface {
 
     public PlayerStatsModel getPlayerStats(String playerId){
 
-        PlayerStatsModel playerStats=null;
+        PlayerStatsModel playerStats =null;
         String query = "SELECT sum(NOM) as totalNOM, sum(goals) as totalGoals,sum(assists) as totalAssists,sum(goals_saved) as totalGoalsSaved," +
                 "sum(yellow_Card) as totalYellowCard,sum(red_card) as totalRedCard,sum(MOM) as totalMOM" +
                 " from PlayerStats where player_id ="+playerId +";";
