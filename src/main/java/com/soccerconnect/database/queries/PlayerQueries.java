@@ -5,8 +5,6 @@ import com.soccerconnect.models.PlayerStatsModel;
 import com.soccerconnect.models.PlayerModel;
 import com.soccerconnect.models.TeamStatsModel;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-
 import com.soccerconnect.models.TeamModel;
 
 import java.sql.ResultSet;
