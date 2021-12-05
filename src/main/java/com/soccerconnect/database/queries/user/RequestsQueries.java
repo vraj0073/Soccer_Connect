@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class RequestsQueries implements RequestsQueriesInterface {
 
-    Connection conn;
+    public Connection conn;
 
     public RequestsQueries(Connection conn) {
         this.conn = conn;

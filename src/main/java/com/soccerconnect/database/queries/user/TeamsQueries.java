@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 public class TeamsQueries implements TeamsQueriesInterface {
 
-    Connection conn;
+    public Connection conn;
+
 
     public TeamsQueries(Connection conn) {
         this.conn = conn;
