@@ -15,11 +15,11 @@ public class MasterController {
 
     String configFileName = "application.properties";
     ConfigReaderInterface configReader = new ConfigReader(configFileName);
-    DBConnectionApp db = new DBConnectionApp(configReader);
-    Connection conn = db.getConnection();
+    DBConnectionApp db = DBConnectionApp.getDbApp(configReader);
+    protected Connection conn = db.getConnection();
 
-    public static String currentUserId;
-    RolesQueriesInterface rq = new RolesQueries(conn);
+    protected static String currentUserId;
+    protected RolesQueriesInterface rq = new RolesQueries(conn);
 
 
     public String welcome() {

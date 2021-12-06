@@ -1,5 +1,6 @@
-package com.soccerconnect.controllers;
+package com.soccerconnect.controllers.user;
 
+import com.soccerconnect.controllers.MasterController;
 import com.soccerconnect.models.stats.PlayerStatsModel;
 import com.soccerconnect.models.stats.TeamStatsModel;
 import com.soccerconnect.models.user.TeamModel;
@@ -41,8 +42,8 @@ public class PlayersController extends UserController{
     @GetMapping(value = "/pendingTeamRequests")
     public String viewPendingTeamRequests(Model model)
     {
-        HashMap<String, String> requestsSent = rqq.getRequests(currentUserId);
-        HashMap<String, String> requestsReceived = rqq.getReceivedRequests(currentUserId);
+        HashMap<String, String> requestsSent = rqq.getRequests(MasterController.currentUserId);
+        HashMap<String, String> requestsReceived = rqq.getReceivedRequests(MasterController.currentUserId);
         model.addAttribute("requestsSent", requestsSent);
         model.addAttribute("requestsReceived", requestsReceived);
         return "viewPendingTeamReqs";
@@ -52,6 +53,7 @@ public class PlayersController extends UserController{
     public String acceptPlayerRequest(@RequestParam(value="acceptReqIdTeam") String TeamId)
     {
         pq.acceptRequest(TeamId, MasterController.currentUserId);
+        pq.addPlayerStats(MasterController.currentUserId,TeamId);
         return welcome();
     }
 

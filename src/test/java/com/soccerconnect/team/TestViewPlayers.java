@@ -1,8 +1,9 @@
 package com.soccerconnect.team;
 
-import com.soccerconnect.database.queries.AdminQueries;
-import com.soccerconnect.database.queries.TeamsQueries;
-import com.soccerconnect.models.PlayerModel;
+
+import com.soccerconnect.database.queries.game.GamesQueries;
+import com.soccerconnect.database.queries.user.TeamsQueries;
+import com.soccerconnect.models.user.PlayerModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +23,8 @@ public class TestViewPlayers {
     TeamsQueries teamsQueries;
     @BeforeEach
     void setup() {
-        teamsQueries = new TeamsQueries();
-        teamsQueries.conn = mock(Connection.class);
+        teamsQueries = new TeamsQueries(mock(Connection.class));
+
     }
     String teamId = "2";
     @Test

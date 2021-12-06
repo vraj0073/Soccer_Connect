@@ -1,8 +1,7 @@
 package com.soccerconnect.team;
 
-import com.soccerconnect.database.queries.TeamsQueries;
-import com.soccerconnect.models.PlayerModel;
-import com.soccerconnect.models.TeamStatsModel;
+import com.soccerconnect.database.queries.user.TeamsQueries;
+import com.soccerconnect.models.stats.TeamStatsModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,9 +20,7 @@ public class TestTeamStats {
     TeamsQueries teamsQueries;
     @BeforeEach
     void setup() {
-
-        teamsQueries = new TeamsQueries();
-        teamsQueries.conn = mock(Connection.class);
+        teamsQueries = new TeamsQueries(mock(Connection.class));
     }
 
     @Test

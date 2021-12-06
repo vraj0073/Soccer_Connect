@@ -12,12 +12,11 @@ public class DBConnectionApp {
     String PASSWORD;
     String URL;
     
-    public Connection conn;
-    ConfigReaderInterface configReader;
+    private Connection conn;
+    private static DBConnectionApp db;
 
-    public DBConnectionApp(ConfigReaderInterface configReader) {
+    private DBConnectionApp(ConfigReaderInterface configReader) {
         try {
-            this.configReader = configReader;
             HOST = configReader.getConfigValue("HOST");
             SCHEMA = configReader.getConfigValue("SCHEMA");
             USER = configReader.getConfigValue("USER");
@@ -26,6 +25,14 @@ public class DBConnectionApp {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    // Usage of singleton pattern
+    public static DBConnectionApp getDbApp(ConfigReaderInterface configReader){
+        if(db==null){
+            db = new DBConnectionApp(configReader);
+        }
+        return db;
     }
 
     public Connection getConnection(){

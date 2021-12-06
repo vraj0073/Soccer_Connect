@@ -1,5 +1,6 @@
-package com.soccerconnect.controllers;
+package com.soccerconnect.controllers.user;
 
+import com.soccerconnect.controllers.MasterController;
 import com.soccerconnect.database.queries.game.GamesQueriesInterface;
 import com.soccerconnect.database.queries.ground.GroundsQueriesInterface;
 import com.soccerconnect.database.queries.user.AdminQueries;

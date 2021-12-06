@@ -1,5 +1,6 @@
-package com.soccerconnect.controllers;
+package com.soccerconnect.controllers.user;
 
+import com.soccerconnect.controllers.MasterController;
 import com.soccerconnect.models.user.PlayerModel;
 import com.soccerconnect.models.stats.TeamStatsModel;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,7 @@ public class TeamsController extends UserController{
     @GetMapping(value = "/players")
     public String viewPlayers(Model model)
     {
-        ArrayList<PlayerModel> players = pq.getPlayers(currentUserId);
+        ArrayList<PlayerModel> players = pq.getPlayers(MasterController.currentUserId);
         model.addAttribute("players", players);
         return "viewPlayers";
     }
@@ -47,7 +48,7 @@ public class TeamsController extends UserController{
     @GetMapping(value = "/teamStats")
     public String getTeamStats(Model model)
     {
-        TeamStatsModel teamStats= tq.getTeamStats(currentUserId);
+        TeamStatsModel teamStats= tq.getTeamStats(MasterController.currentUserId);
         model.addAttribute("teamStats", teamStats);
         return "viewTeamStats";
     }
@@ -55,8 +56,8 @@ public class TeamsController extends UserController{
     @GetMapping(value = "/pendingPlayerRequests")
     public String viewPendingPlayerRequests(Model model)
     {
-        HashMap<String, String> requestsSent = rqq.getRequests(currentUserId);
-        HashMap<String, String> requestsReceived = rqq.getReceivedRequests(currentUserId);
+        HashMap<String, String> requestsSent = rqq.getRequests(MasterController.currentUserId);
+        HashMap<String, String> requestsReceived = rqq.getReceivedRequests(MasterController.currentUserId);
         model.addAttribute("requestsSent", requestsSent);
         model.addAttribute("requestsReceived", requestsReceived);
         return "viewPendingPlayerReqs";
@@ -66,6 +67,7 @@ public class TeamsController extends UserController{
     public String acceptTeamRequests(@RequestParam(value = "acceptReqId") String playerId)
     {
         tq.acceptRequest(playerId, MasterController.currentUserId);
+        pq.addPlayerStats(playerId,MasterController.currentUserId);
         return welcome();
     }
 
