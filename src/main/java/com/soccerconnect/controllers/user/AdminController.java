@@ -1,5 +1,6 @@
-package com.soccerconnect.controllers;
+package com.soccerconnect.controllers.user;
 
+import com.soccerconnect.controllers.MasterController;
 import com.soccerconnect.database.queries.game.GamesQueriesInterface;
 import com.soccerconnect.database.queries.ground.GroundsQueriesInterface;
 import com.soccerconnect.database.queries.user.AdminQueries;
@@ -27,7 +28,7 @@ import java.util.Comparator;
 
 
 @Controller
-public class AdminController extends MasterController{
+public class AdminController extends MasterController {
 
     AdminQueriesInterface aq = new AdminQueries(conn);
     GroundsQueriesInterface gq = new GroundQueries(conn);
