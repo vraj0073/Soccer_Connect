@@ -16,6 +16,7 @@ import com.soccerconnect.models.stats.StatsModel;
 import com.soccerconnect.models.user.PlayerModel;
 import com.soccerconnect.models.user.TeamModel;
 import com.soccerconnect.models.stats.TeamStatsModel;
+import org.apache.tomcat.jni.Global;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -35,6 +37,7 @@ public class AdminController extends MasterController {
     GroundsQueriesInterface gq = new GroundQueries(conn);
     GamesQueriesInterface gaq = new GamesQueries(conn);
     TeamsQueriesInterface tq = new TeamsQueries(conn);
+
 
 
     @GetMapping(value = "/viewAllPlayers")
@@ -198,12 +201,16 @@ public class AdminController extends MasterController {
         }
 
     }
+    String playerName;
     public String validationMOM(@ModelAttribute StatsModel teamStats, Model model){
         String momFlag = "0";
         String errorMsg = "";
         for (PlayerStatsModel playerStat : teamStats.getTeam1PlayersStats()) {
             if(playerStat.getMom().equals("1") && !momFlag.equals("1") ){
                 momFlag = "1";
+                playerName = playerStat.getPlayerId();
+
+
             }
             else if(playerStat.getMom().equals("1") && momFlag.equals("1")){
                 errorMsg = "Duplicate Man of the match";
@@ -218,6 +225,7 @@ public class AdminController extends MasterController {
 
             if(playerStat.getMom().equals("1") && !momFlag.equals("1") ){
                 momFlag = "1";
+                playerName = playerStat.getPlayerId();
             }
             else if(playerStat.getMom().equals("1") && momFlag.equals("1")){
                 errorMsg = "Duplicate Man of the match";
@@ -298,6 +306,14 @@ public class AdminController extends MasterController {
     public String returnMethod()
     {
         return "welcomeAdmin";
+    }
+    @GetMapping(value = "/MoM")
+    public String MoM(Model model)
+    {
+        String momName = playerName;
+        model.addAttribute("momName", momName);
+        return "manofTheMatch";
+
     }
 
 }
