@@ -216,11 +216,4 @@ public class AdminController extends MasterController {
         model.addAttribute("rank", rank);
         return "teamRanking";
     }
-
-    
-    @GetMapping(value = "/errorHandler")
-    public String Error(Model model){
-        return welcome();
-    }
-
 }
