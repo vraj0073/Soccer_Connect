@@ -52,6 +52,7 @@ public class PlayersController extends UserController{
     public String acceptPlayerRequest(@RequestParam(value="acceptReqIdTeam") String TeamId)
     {
         pq.acceptRequest(TeamId, MasterController.currentUserId);
+        pq.addPlayerStats(MasterController.currentUserId,TeamId);
         return welcome();
     }
 
