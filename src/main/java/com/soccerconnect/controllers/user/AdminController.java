@@ -38,7 +38,8 @@ public class AdminController extends MasterController {
 
 
     @GetMapping(value = "/viewAllPlayers")
-    public String viewPlayers(Model model) {
+    public String viewPlayers(Model model)
+    {
         ArrayList<PlayerModel> players = aq.getAllPlayers();
         model.addAttribute("players", players);
         return "viewAllPlayers";
