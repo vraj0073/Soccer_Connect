@@ -15,4 +15,5 @@ public interface PlayerQueriesInterface {
     public void removeTeam(String teamId, String playerId);
     public void acceptRequest(String teamId, String playerId);
     public void rejectRequest(String teamId, String playerId);
+    public void addPlayerStats(String playerId,String teamId);
 }

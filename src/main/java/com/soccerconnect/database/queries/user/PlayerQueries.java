@@ -139,4 +139,18 @@ public class PlayerQueries implements PlayerQueriesInterface {
             System.out.println(e);
         }
     }
+
+    public void addPlayerStats(String playerId,String teamId) {
+
+        String query = "INSERT INTO PlayerStats (Player_Id, Team_id, NOM, Goals,Assists,Goals_saved,Yellow_card,Red_card,MOM) VALUES ('\"\n" +playerId
+                +"," + teamId +  " \"','0','0','0','0','0','0','0');";
+
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            System.out.println("executed ");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
