@@ -1,5 +1,6 @@
-package com.soccerconnect.controllers;
+package com.soccerconnect.controllers.access;
 
+import com.soccerconnect.controllers.MasterController;
 import com.soccerconnect.database.queries.access.RegistrationQueries;
 import com.soccerconnect.database.queries.access.RegistrationQueriesInterface;
 import com.soccerconnect.models.user.UserModel;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class RegisterController extends MasterController{
+public class RegisterController extends MasterController {
 
     RegistrationQueriesInterface req = new RegistrationQueries(conn);
 
