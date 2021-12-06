@@ -180,6 +180,7 @@ public class AdminController extends MasterController {
         }
         else {
             ArrayList<Integer> teamGoal = new ArrayList<>();
+
             teamGoal.add(Integer.parseInt(teamStats.getTeam1Goals()));
             teamGoal.add(Integer.parseInt(teamStats.getTeam2Goals()));
             model.addAttribute("teamGoal", teamGoal);
@@ -213,6 +214,7 @@ public class AdminController extends MasterController {
             }
         }
         for (PlayerStatsModel playerStat : teamStats.getTeam2PlayersStats()) {
+
             if(playerStat.getMom().equals("1") && !momFlag.equals("1") ){
                 momFlag = "1";
             }
@@ -287,6 +289,12 @@ public class AdminController extends MasterController {
     }
     @GetMapping(value = "/errorScoreGame")
     public String errorScoreGame()
+    {
+        return "welcomeAdmin";
+    }
+
+    @GetMapping(value = "/returnHome")
+    public String returnMethod()
     {
         return "welcomeAdmin";
     }
