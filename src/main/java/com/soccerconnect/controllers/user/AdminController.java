@@ -216,5 +216,4 @@ public class AdminController extends MasterController {
         model.addAttribute("rank", rank);
         return "teamRanking";
     }
-
 }
