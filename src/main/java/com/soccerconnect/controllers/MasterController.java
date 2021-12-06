@@ -15,7 +15,7 @@ public class MasterController {
 
     String configFileName = "application.properties";
     ConfigReaderInterface configReader = new ConfigReader(configFileName);
-    DBConnectionApp db = new DBConnectionApp(configReader);
+    DBConnectionApp db = DBConnectionApp.getDbApp(configReader);
     protected Connection conn = db.getConnection();
 
     protected static String currentUserId;
