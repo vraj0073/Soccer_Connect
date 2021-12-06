@@ -217,4 +217,10 @@ public class AdminController extends MasterController {
         return "teamRanking";
     }
 
+    
+    @GetMapping(value = "/errorHandler")
+    public String Error(Model model){
+        return welcome();
+    }
+
 }
