@@ -28,6 +28,7 @@ import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 
 @Controller
@@ -155,7 +156,7 @@ public class AdminController extends MasterController {
         List<Integer> totalGoalScoredTeam1 = new ArrayList<Integer>();
         List<Integer> totalGoalScoredTeam2 = new ArrayList<Integer>();
         validationString = validationMOM(teamStats,model);
-        if (validationString == "1"){
+        if (Objects.equals(validationString, "1")){
 
             for (PlayerStatsModel playerStat : teamStats.getTeam1PlayersStats()) {
 
@@ -183,8 +184,11 @@ public class AdminController extends MasterController {
             return "errorScoreGame";
         }
         else {
-            ArrayList<Integer> teamGoal = new ArrayList<>();
+            processTeamStats(teamStats);
+            processTeamPlayerStats(teamStats.team1Id, teamStats.team1PlayersStats);
+            processTeamPlayerStats(teamStats.team2Id, teamStats.team2PlayersStats);
 
+            ArrayList<Integer> teamGoal = new ArrayList<>();
             teamGoal.add(Integer.parseInt(teamStats.getTeam1Goals()));
             teamGoal.add(Integer.parseInt(teamStats.getTeam2Goals()));
             model.addAttribute("teamGoal", teamGoal);
