@@ -1,5 +1,6 @@
-package com.soccerconnect.controllers;
+package com.soccerconnect.controllers.access;
 
+import com.soccerconnect.controllers.MasterController;
 import com.soccerconnect.database.queries.access.LoginQueries;
 import com.soccerconnect.database.queries.access.LoginQueriesInterface;
 import com.soccerconnect.models.user.UserModel;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 
 @Controller
-public class LoginController extends MasterController{
+public class LoginController extends MasterController {
 
     LoginQueriesInterface lq = new LoginQueries(conn);
 
