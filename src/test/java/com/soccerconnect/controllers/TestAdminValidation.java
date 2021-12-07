@@ -1,22 +1,16 @@
 package com.soccerconnect.controllers;
-
 import com.soccerconnect.controllers.user.AdminController;
 import com.soccerconnect.models.stats.StatsModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 import com.soccerconnect.models.stats.PlayerStatsModel;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -35,7 +29,6 @@ class TestAdminValidation {
 
     @BeforeEach
     void setup(){
-//        teamStats = new StatsModel(teamStats.team1PlayersStats,teamStats.team2PlayersStats);
         adminController = mock(AdminController.class);
         model = mock(Model.class);
         teamStats = mock(StatsModel.class);
@@ -67,12 +60,7 @@ class TestAdminValidation {
         team2Player1Stats.setAsst("1");
         team2PlayerStats.add(team2Player1Stats);
         teamStats.setTeam2PlayersStats(team2PlayerStats);
-
         when(adminController.validationMOM(teamStats,model)).thenReturn("errorScoreGame");
-
-
-
-
     }
 
     public static Stream<Arguments> createTeamStats(){
@@ -82,8 +70,6 @@ class TestAdminValidation {
     @ParameterizedTest
     @MethodSource("createTeamStats")
     void validationScorePositiveTeamGoals(Integer team1Goal, Integer team2Goal) {
-//        team1Goal = Integer.valueOf(teamStats.getTeam1Goals());
-//        team2Goal = Integer.valueOf(teamStats.getTeam2Goals());
         assertTrue(team1Goal >= 0 && team2Goal >= 0);
     }
 
