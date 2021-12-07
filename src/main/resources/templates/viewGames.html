@@ -23,8 +23,11 @@
       <td th:text="${game.groundName}"/>
       <td th:text="${game.date}"/>
       <td th:text="${game.time}"/>
-      <td><button type="submit" th:value="${game.gameId}" name="score">Score Game</button>
-        <button type="submit" th:value="${game.gameId}" name="delete">Delete Game</button></td>
+      <td>
+        <button type="submit" th:value="${game.gameId}" name="score">Score Game</button>
+        <button type="submit" th:value="${game.gameId}" name="delete">Delete Game</button>
+        <button type="submit" th:value="${game.gameId}" name="view">View Score</button>
+      </td>
     </tr>
   </table>
 </form>

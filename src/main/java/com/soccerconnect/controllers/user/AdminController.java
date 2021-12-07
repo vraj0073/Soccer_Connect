@@ -16,7 +16,6 @@ import com.soccerconnect.models.stats.StatsModel;
 import com.soccerconnect.models.user.PlayerModel;
 import com.soccerconnect.models.user.TeamModel;
 import com.soccerconnect.models.stats.TeamStatsModel;
-import org.apache.tomcat.jni.Global;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.text.AttributedString;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 @Controller
@@ -118,8 +113,15 @@ public class AdminController extends MasterController {
 
     @RequestMapping(value = "/scoreGame")
     public String scoreGame(Model model,
+                            @RequestParam(value = "view", defaultValue = "") String viewGameId,
                             @RequestParam(value = "score", defaultValue = "") String scoreGameId,
                             @RequestParam(value = "delete", defaultValue = "") String deleteGameId) {
+
+        if(!viewGameId.isEmpty()){
+            HashMap<String, String> game = gaq.getGameScore(viewGameId, aq);
+            model.addAttribute("game", game);
+            return "viewGameInfo";
+        }
         if (deleteGameId.isEmpty()) {
             GameModel game = gaq.getGameDetails(scoreGameId, aq);
             ArrayList<PlayerModel> team1Players = tq.getTeamPlayers(game.getTeam1Id());
@@ -147,7 +149,7 @@ public class AdminController extends MasterController {
     }
 
     @RequestMapping(value = "/score")
-    public String manageStats(@ModelAttribute StatsModel teamStats, Model model) {
+    public String manageStats(@ModelAttribute StatsModel teamStats, Model model, @RequestParam(value = "gameId") String gameId) {
         int team1Goal = 0;
         int team2Goal = 0;
         String errorMsg = "";
@@ -187,6 +189,7 @@ public class AdminController extends MasterController {
             processTeamStats(teamStats);
             processTeamPlayerStats(teamStats.team1Id, teamStats.team1PlayersStats);
             processTeamPlayerStats(teamStats.team2Id, teamStats.team2PlayersStats);
+            updateGameInfo(teamStats, gameId);
 
             ArrayList<Integer> teamGoal = new ArrayList<>();
             teamGoal.add(Integer.parseInt(teamStats.getTeam1Goals()));
@@ -194,6 +197,21 @@ public class AdminController extends MasterController {
             model.addAttribute("teamGoal", teamGoal);
             return "teamScoreBoard";
         }
+    }
+
+    private void updateGameInfo(StatsModel teamStats, String gameId){
+        String mom = null;
+        for (PlayerStatsModel playerStat : teamStats.getTeam1PlayersStats()) {
+            if(playerStat.getMom().equals("1")){
+               mom = playerStat.getPlayerId();
+            }
+        }
+        for (PlayerStatsModel playerStat : teamStats.getTeam2PlayersStats()) {
+            if(playerStat.getMom().equals("1")){
+                mom = playerStat.getPlayerId();
+            }
+        }
+        gaq.addGameInfo(gameId, teamStats.getTeam1Goals(), teamStats.getTeam2Goals(), mom);
     }
 
     public String validationScore(@ModelAttribute StatsModel teamStats,Integer team1Goal, Integer team2Goal){

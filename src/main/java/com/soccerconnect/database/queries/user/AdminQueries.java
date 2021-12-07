@@ -172,4 +172,20 @@ public class AdminQueries implements AdminQueriesInterface {
         }
         return rank;
     }
+
+    public HashMap<String, String> getPlayerIdToName(){
+        HashMap<String, String> teamIdToName = new HashMap<>();
+        String query = "SELECT User_ID,Name from users where Role_Id='1';";
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                teamIdToName.put(rs.getString("User_ID"), rs.getString("Name"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return teamIdToName;
+    }
 }
