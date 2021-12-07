@@ -64,7 +64,7 @@ public class GamesQueries implements GamesQueriesInterface {
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                game = new GameModel(rs.getString("game_ID"),
+                game = new GameModel(scoreGameId,
                         rs.getString("category"), rs.getString("team1"),
                         rs.getString("team2"), rs.getString("ground"),
                         rs.getString("date"), rs.getString("time"),
@@ -75,6 +75,38 @@ public class GamesQueries implements GamesQueriesInterface {
             System.out.println(e);
         }
         return game;
+    }
+
+    public void addGameInfo(String gameId, String team1Goals, String team2Goals, String mom) {
+        String query = "INSERT INTO GameInfo(game_id,team1_goals,team2_goals,mom) " + "VALUES ('" + gameId
+                + "','"+team1Goals+"','"+team2Goals+"','"+mom+"');";
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public HashMap<String, String> getGameScore(String scoreGameId, AdminQueriesInterface aq) {
+        HashMap<String, String> gameScore = new HashMap<>();
+        HashMap<String, String> playerIdToName = aq.getPlayerIdToName();
+        String query = "SELECT * from GameInfo where game_id='" + scoreGameId + "';";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                gameScore.put("team1Goals", rs.getString("team1_goals"));
+                gameScore.put("team2Goals", rs.getString("team2_goals"));
+                gameScore.put("mom", playerIdToName.get(rs.getString("mom")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        System.out.println(gameScore);
+        return gameScore;
     }
 
 }

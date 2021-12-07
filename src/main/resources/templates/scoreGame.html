@@ -13,6 +13,7 @@
   <p th:text="${game.team2Name} + ' goals:'"></p>
   <input type="number" th:field="*{team2Goals}" min="0"/>
   <input type="hidden" th:field="*{team2Id}" th:value="${game.team2Id}"/>
+  <input type="hidden" name="gameId" th:value="${game.getGameId()}"/>
   <h3 th:text="${game.team1Name} + ' players:'"></h3>
   <table>
     <tr>

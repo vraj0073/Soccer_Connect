@@ -19,5 +19,6 @@ public interface AdminQueriesInterface {
     public PlayerStatsModel getPlayerStatsByTeam(String playerId, String teamId);
     public void updatePlayerStats(PlayerStatsModel existingPlayerStat, String teamId);
     public ArrayList<TeamStatsModel> getTeamRanking();
+    public HashMap<String, String> getPlayerIdToName();
 
 }
