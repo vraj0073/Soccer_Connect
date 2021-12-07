@@ -223,16 +223,13 @@ public class AdminController extends MasterController {
         }
 
     }
-    String playerName;
+
     public String validationMOM(@ModelAttribute StatsModel teamStats, Model model){
         String momFlag = "0";
         String errorMsg = "";
         for (PlayerStatsModel playerStat : teamStats.getTeam1PlayersStats()) {
             if(playerStat.getMom().equals("1") && !momFlag.equals("1") ){
                 momFlag = "1";
-                playerName = playerStat.getPlayerId();
-
-
             }
             else if(playerStat.getMom().equals("1") && momFlag.equals("1")){
                 errorMsg = "Duplicate Man of the match";
@@ -247,7 +244,6 @@ public class AdminController extends MasterController {
 
             if(playerStat.getMom().equals("1") && !momFlag.equals("1") ){
                 momFlag = "1";
-                playerName = playerStat.getPlayerId();
             }
             else if(playerStat.getMom().equals("1") && momFlag.equals("1")){
                 errorMsg = "Duplicate Man of the match";
@@ -261,7 +257,6 @@ public class AdminController extends MasterController {
 
         return momFlag;
     }
-
 
     private void processTeamPlayerStats(String teamId, ArrayList<PlayerStatsModel> teamPlayerStats) {
         for (PlayerStatsModel playerStat : teamPlayerStats) {
@@ -328,14 +323,6 @@ public class AdminController extends MasterController {
     public String returnMethod()
     {
         return "welcomeAdmin";
-    }
-    @GetMapping(value = "/MoM")
-    public String MoM(Model model)
-    {
-        String momName = playerName;
-        model.addAttribute("momName", momName);
-        return "manofTheMatch";
-
     }
 
 }
