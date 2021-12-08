@@ -313,7 +313,7 @@ public class AdminController extends MasterController {
     @GetMapping(value = "/teamRanking")
     public String teamRanking(Model model) {
         ArrayList<TeamStatsModel> rank = aq.getTeamRanking();
-        rank.sort(Comparator.comparing(TeamStatsModel::getWins).thenComparing(TeamStatsModel::getDraws).reversed());
+        rank.sort(Comparator.comparing(TeamStatsModel::getGoals).reversed());
         model.addAttribute("rank", rank);
         return "teamRanking";
     }
