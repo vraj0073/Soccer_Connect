@@ -1,5 +1,6 @@
 package com.soccerconnect.controllers;
 
+import com.soccerconnect.Constants;
 import com.soccerconnect.database.DBConnectionApp;
 import com.soccerconnect.database.queries.access.RolesQueries;
 import com.soccerconnect.database.queries.access.RolesQueriesInterface;
@@ -15,22 +16,24 @@ public class MasterController {
 
     String configFileName = "application.properties";
     ConfigReaderInterface configReader = new ConfigReader(configFileName);
+    // Usage of singleton pattern to get DB app
     DBConnectionApp db = DBConnectionApp.getDbApp(configReader);
     protected Connection conn = db.getConnection();
 
     protected static String currentUserId;
+    // Dependency inversion by passing object of Connection interface
     protected RolesQueriesInterface rq = new RolesQueries(conn);
 
 
     public String welcome() {
+        // Method to load welcome page based on the role
         if (currentUserId != null) {
             int RoleId = rq.getRoleFromUserId(currentUserId);
-            if (RoleId == 0) {
-
+            if (RoleId == Constants.admin) {
                 return "welcomeAdmin";
-            } else if (RoleId == 1) {
+            } else if (RoleId == Constants.player) {
                 return "welcomePlayer";
-            } else if (RoleId == 2) {
+            } else if (RoleId == Constants.team) {
                 return "welcomeTeam";
             } else {
                 return "login";
