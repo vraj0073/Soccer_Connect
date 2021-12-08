@@ -48,5 +48,6 @@ deploy_production:
     - dpl --provider=heroku --app=HEROKU_NAME_PROD  --api-key=$HEROKU_API_KEY
   only:
     - master
+    - release-1
 
    
