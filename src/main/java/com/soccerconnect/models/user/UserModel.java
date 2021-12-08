@@ -2,6 +2,8 @@ package com.soccerconnect.models.user;
 
 public class UserModel {
 
+    // Model class for a user. The user can be player team or admin. Player and team models will extend this class
+
     String userId;
     String role;
     String email;

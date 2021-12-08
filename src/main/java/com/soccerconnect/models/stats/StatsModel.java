@@ -3,6 +3,9 @@ package com.soccerconnect.models.stats;
 import java.util.ArrayList;
 
 public class StatsModel {
+
+    // Model class which holds the stats of a game. Holds player stats of each player of both the teams. Unique for a game.
+
     public ArrayList<PlayerStatsModel> team1PlayersStats;
     public ArrayList<PlayerStatsModel> team2PlayersStats;
     public String team1Id;

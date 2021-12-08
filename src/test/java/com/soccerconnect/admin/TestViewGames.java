@@ -20,6 +20,8 @@ import static org.mockito.Mockito.when;
 
 public class TestViewGames {
 
+    // Class to test view games functionality of the admin
+
     GamesQueries gq;
     AdminQueries aq;
 
@@ -31,7 +33,7 @@ public class TestViewGames {
 
     @Test
     void TestViewAllGames() throws SQLException {
-
+        // Base case to view all the games
         Statement stmt = mock(Statement.class);
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.getString("game_ID")).thenReturn("400");
@@ -76,7 +78,7 @@ public class TestViewGames {
 
     @Test
     void TestViewAllGamesEmptyData() throws SQLException {
-
+        // View games in case of no data in the DB
         Statement stmt = mock(Statement.class);
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.next()).thenReturn(false);
