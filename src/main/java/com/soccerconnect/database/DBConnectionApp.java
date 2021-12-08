@@ -6,6 +6,8 @@ import java.sql.*;
 
 public class DBConnectionApp {
 
+    // App to connect to DB
+
     String HOST;
     String SCHEMA;
     String USER;
@@ -36,6 +38,7 @@ public class DBConnectionApp {
     }
 
     public Connection getConnection(){
+        // Method to get DB connection object
         try {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
@@ -45,6 +48,7 @@ public class DBConnectionApp {
     }
 
     public void closeConnection(){
+        // Method to close connection
         try {
             conn.close();
         } catch (SQLException e) {

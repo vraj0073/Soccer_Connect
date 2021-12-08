@@ -15,6 +15,7 @@ public class RolesQueries implements RolesQueriesInterface {
     }
 
     public int getRoleFromEmail(String email){
+        // Method to get user role from email
         int roleID = -1;
         String query = "SELECT Role_ID from users where Email_ID='" + email + "';";
         try{
@@ -31,6 +32,7 @@ public class RolesQueries implements RolesQueriesInterface {
     }
 
     public int getRoleFromUserId(String userId){
+        // Method to get user role from user Id
         int roleID = -1;
         String query = "SELECT Role_ID from users where User_ID='" + userId + "';";
         try{
@@ -47,6 +49,7 @@ public class RolesQueries implements RolesQueriesInterface {
     }
 
     public String getUserId(String email){
+        //Method to get user Id for a given email
         String userID = "-1";
         String query = "SELECT User_ID from users where Email_ID='" + email + "';";
         try{

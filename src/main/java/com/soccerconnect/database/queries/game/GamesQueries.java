@@ -32,6 +32,7 @@ public class GamesQueries implements GamesQueriesInterface {
     }
 
     public ArrayList<GameModel> getGames(AdminQueriesInterface aq) {
+        // Method to get all the available games
         ArrayList<GameModel> games= new ArrayList<>();
         HashMap<String, String> teamIdToName = aq.getTeamIdToName();
         HashMap<String, String> groundIdToName = aq.getGroundIdToName();
@@ -56,6 +57,7 @@ public class GamesQueries implements GamesQueriesInterface {
     }
 
     public GameModel getGameDetails(String scoreGameId, AdminQueriesInterface aq) {
+        // Method to get game details for a given game id
         GameModel game = null;
         HashMap<String, String> teamIdToName = aq.getTeamIdToName();
         String query = "SELECT * from games where game_ID='" + scoreGameId + "';";
@@ -78,6 +80,7 @@ public class GamesQueries implements GamesQueriesInterface {
     }
 
     public void addGameInfo(String gameId, String team1Goals, String team2Goals, String mom) {
+        // Method to add game level info
         String query = "INSERT INTO GameInfo(game_id,team1_goals,team2_goals,mom) " + "VALUES ('" + gameId
                 + "','"+team1Goals+"','"+team2Goals+"','"+mom+"');";
         try {
@@ -90,6 +93,7 @@ public class GamesQueries implements GamesQueriesInterface {
     }
 
     public HashMap<String, String> getGameScore(String scoreGameId, AdminQueriesInterface aq) {
+        // Method to get game level info for a given game Id
         HashMap<String, String> gameScore = new HashMap<>();
         HashMap<String, String> playerIdToName = aq.getPlayerIdToName();
         String query = "SELECT * from GameInfo where game_id='" + scoreGameId + "';";

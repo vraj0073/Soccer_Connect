@@ -15,6 +15,7 @@ public class LoginQueries implements LoginQueriesInterface {
     }
 
     public String getPasswordFromEmail(String email){
+        // Method to get password from given email
         String password = "";
         String query = "SELECT Password from users where Email_ID='" + email + "';";
         try{
