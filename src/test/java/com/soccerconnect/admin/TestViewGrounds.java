@@ -18,6 +18,8 @@ import static org.mockito.Mockito.when;
 
 public class TestViewGrounds {
 
+    // Class to test View grounds of the admin
+
     GroundQueries gq;
 
     @BeforeEach
@@ -27,7 +29,7 @@ public class TestViewGrounds {
 
     @Test
     void TestViewAllGrounds() throws SQLException {
-
+        // Base case to view all grounds
         Statement stmt = mock(Statement.class);
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.getString("Ground_ID")).thenReturn("300");
@@ -61,7 +63,7 @@ public class TestViewGrounds {
 
     @Test
     void TestViewAllGroundsEmptyData() throws SQLException {
-
+        // Test case to view all grounds when DB is empty
         Statement stmt = mock(Statement.class);
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.next()).thenReturn(false);

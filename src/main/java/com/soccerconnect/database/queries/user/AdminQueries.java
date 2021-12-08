@@ -65,6 +65,7 @@ public class AdminQueries implements AdminQueriesInterface {
     }
 
     public HashMap<String, String> getTeamIdToName(){
+        // Method to form a mapping of team ID to team Name
         HashMap<String, String> teamIdToName = new HashMap<>();
         String query = "SELECT User_ID,Name from users where Role_Id='2';";
         try{
@@ -81,6 +82,7 @@ public class AdminQueries implements AdminQueriesInterface {
     }
 
     public HashMap<String, String> getGroundIdToName(){
+        // Method to form mapping of ground ID to ground Name
         HashMap<String, String> groundIdToName = new HashMap<>();
         String query = "SELECT Ground_ID,Ground_Name from Grounds;";
         try{
@@ -97,6 +99,7 @@ public class AdminQueries implements AdminQueriesInterface {
     }
 
     public void deleteGame(String deleteGameId) {
+        // Method to delete a game
         String query = "DELETE FROM games WHERE game_ID='" + deleteGameId + "';";
         try{
             Statement stmt = conn.createStatement();
@@ -108,6 +111,7 @@ public class AdminQueries implements AdminQueriesInterface {
     }
 
     public void updateTeamStats(TeamStatsModel team1Stats) {
+        // Method to update team stats
         String query = "UPDATE TeamStats SET NOM='"+team1Stats.getNom()+"', Goals='"+
                 team1Stats.getGoals()+"', Wins='"+team1Stats.getWins()+"', Losses='"+
                 team1Stats.getLosses()+"', Draws='"+team1Stats.getDraws()+"' WHERE Team_ID='"+
@@ -122,7 +126,7 @@ public class AdminQueries implements AdminQueriesInterface {
     }
 
     public PlayerStatsModel getPlayerStatsByTeam(String playerId, String teamId){
-
+        // Method to get player stats for a team
         PlayerStatsModel playerStats=null;
         String query = "SELECT NOM, goals, assists, goals_saved, yellow_Card, red_card, " +
                 "MOM from PlayerStats where player_id ="+playerId +" and team_id="+teamId+";";
@@ -140,6 +144,7 @@ public class AdminQueries implements AdminQueriesInterface {
     }
 
     public void updatePlayerStats(PlayerStatsModel existingPlayerStat, String teamId) {
+        // Method to update player stats
         String query = "UPDATE PlayerStats SET NOM='"+existingPlayerStat.getNom()+"', Goals='"+
                 existingPlayerStat.getGoals()+"', Assists='"+existingPlayerStat.getAsst()+"', Goals_Saved='"+
                 existingPlayerStat.getGoalsSaved()+"', Yellow_Card='"+existingPlayerStat.getYellowCards()+
@@ -174,6 +179,7 @@ public class AdminQueries implements AdminQueriesInterface {
     }
 
     public HashMap<String, String> getPlayerIdToName(){
+        // Method to map player ID to player Name
         HashMap<String, String> teamIdToName = new HashMap<>();
         String query = "SELECT User_ID,Name from users where Role_Id='1';";
         try{

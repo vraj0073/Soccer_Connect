@@ -20,6 +20,7 @@ public class TeamsQueries implements TeamsQueriesInterface {
     }
 
     public ArrayList<TeamModel> getTeams(String playerId){
+        // Method to get all the teams except for the team the player is in
         ArrayList<TeamModel> teams=new ArrayList<>();
         String query = "SELECT User_ID,Name from users where Role_Id='2' AND User_ID NOT IN " +
                 "(SELECT From_id from requests where To_id=" + playerId + ");";
@@ -38,6 +39,7 @@ public class TeamsQueries implements TeamsQueriesInterface {
     }
 
     public void acceptRequest(String playerId, String teamId){
+        // Method for team accepting a players request
         String query = "INSERT INTO PlayerStats (Player_ID, Team_ID) " +
                 "VALUES ('" + playerId + "','" + teamId + "');";
         String deleteQuery = "DELETE FROM requests where To_ID='" + teamId + "' AND From_ID='" + playerId + "';";
@@ -52,9 +54,8 @@ public class TeamsQueries implements TeamsQueriesInterface {
     }
 
     public void rejectRequest(String playerId, String teamId) {
-
+        // Method for team to reject player request
         String rejectQuery = "DELETE FROM requests where To_ID='" + teamId + "' AND From_ID='" + playerId + "';";
-
         try{
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(rejectQuery);
@@ -65,7 +66,7 @@ public class TeamsQueries implements TeamsQueriesInterface {
     }
 
     public TeamStatsModel getTeamStats(String teamId) {
-
+        // Method to get the team stats of a team
         TeamStatsModel teamStats = null;
         String query = "SELECT * from TeamStats WHERE Team_ID='" + teamId + "';";
         try {
@@ -83,6 +84,7 @@ public class TeamsQueries implements TeamsQueriesInterface {
     }
 
     public ArrayList<PlayerModel> getTeamPlayers(String teamId){
+        // Method to get all the players of a team
         ArrayList<PlayerModel> teamPlayers = new ArrayList<>();
         String query = "SELECT Player_ID,Name from PlayerStats JOIN users ON Player_ID=User_ID AND Team_ID='"+teamId+"';";
         try{
@@ -98,6 +100,7 @@ public class TeamsQueries implements TeamsQueriesInterface {
     }
 
     public void deletePlayer(String playerId, String teamId){
+        // Method to delete a player from the team
         String query = "DELETE FROM PlayerStats " +
                 "WHERE PLAYER_ID='" + playerId + "' AND TEAM_ID='" + teamId + "';";
         try{
