@@ -19,6 +19,8 @@ import static org.mockito.Mockito.when;
 
 public class TestViewTeams {
 
+    // Class to Test view teams for an admin
+
     AdminQueries aq;
 
     @BeforeEach
@@ -28,7 +30,7 @@ public class TestViewTeams {
 
     @Test
     void TestViewAllTeams() throws SQLException {
-
+        // Base case to test view all teams
         Statement stmt = mock(Statement.class);
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.getString("User_ID")).thenReturn("200");
@@ -59,7 +61,7 @@ public class TestViewTeams {
 
     @Test
     void TestViewAllTeamsEmptyData() throws SQLException {
-
+        // Test case when DB returns empty data
         Statement stmt = mock(Statement.class);
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.next()).thenReturn(false);
@@ -73,7 +75,7 @@ public class TestViewTeams {
 
     @Test
     void TestTeamIdToName() throws SQLException {
-
+        // Test case to test mapping of team id to team name
         Statement stmt = mock(Statement.class);
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.getString("User_ID")).thenReturn("200");

@@ -21,6 +21,8 @@ import java.util.ArrayList;
 @SpringBootTest
 public class TestViewPlayers {
 
+    // Class to test view players for an admin
+
     AdminQueries aq;
 
     @BeforeEach
@@ -30,7 +32,7 @@ public class TestViewPlayers {
 
     @Test
     void TestViewAllPlayers() throws SQLException {
-
+        // Base method to test view players
         Statement stmt = mock(Statement.class);
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.getString("User_ID")).thenReturn("100");
@@ -61,7 +63,7 @@ public class TestViewPlayers {
 
     @Test
     void TestViewAllPlayersEmptyData() throws SQLException {
-
+        // Test view all players when DB returns empty return
         Statement stmt = mock(Statement.class);
         ResultSet resultSetMock = mock(ResultSet.class);
         when(resultSetMock.next()).thenReturn(false);

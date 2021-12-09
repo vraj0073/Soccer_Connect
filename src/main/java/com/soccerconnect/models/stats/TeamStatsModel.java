@@ -2,6 +2,8 @@ package com.soccerconnect.models.stats;
 
 public class TeamStatsModel {
 
+    // Model class which holds team stats of a team. Unique for a team.
+
     String teamId;
     String teamName;
     String nom;
