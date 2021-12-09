@@ -31,7 +31,7 @@ public class RolesQueries implements RolesQueriesInterface {
         return roleID;
     }
 
-    public int getRoleFromUserId(String userId){
+    public int getRoleF romUserId(String userId){
         // Method to get user role from user Id
         int roleID = -1;
         String query = "SELECT Role_ID from users where User_ID='" + userId + "';";
